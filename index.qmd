@@ -270,6 +270,22 @@ From these HTChem syntheses, broad observations can be made, such as the OCNT-00
 
 Together, the three HTChem libraries, including "semi-purified" crudes, expand the publicly-available PXR screening dataset and are intended to facilitate further exploration of PXR SAR across related scaffolds. All raw data for the libraries and experiments described in this post—including CAD peak areas, CAD-derived yields, pEC50 values, and yield-corrected pEC50 calculations with error estimates and confidence intervals—are available in the accompanying GitHub repository.
 
+::: {.callout-note}
+## Accessing the Data on HuggingFace
+
+The crude HTChem library data released with this post is also available on HuggingFace at [`openadmet/pxr-challenge-train-test`](https://huggingface.co/datasets/openadmet/pxr-challenge-train-test). It can be loaded with the [`datasets`](https://huggingface.co/docs/datasets) library:
+
+```python
+from datasets import load_dataset
+
+# Crude HTChem libraries (454 novel EC50s)
+ds_crudes = load_dataset("openadmet/pxr-challenge-train-test", "crudes_htchem")
+train_crudes = ds_crudes["train"]
+```
+
+Key columns include `SMILES`, `OCNT_ID`, `Corrected Crude pEC50 (log)`, `Corrected Crude pEC50 ±95% CI (log)`, `Crude Product Yield (%)`, and `Crude Peak Area (pA*min)`.
+:::
+
 ## 7) Conclusion
 
 The methodologies we have described address a fundamental tension in high-throughput data generation: the trade-off between scale and fidelity. By integrating standard-free UHPLC-CAD-MS quantification with cell-based screening, we can estimate compound-specific reaction yields at the nanoscale, correct nominal D2B assay concentrations, and convert crude HTChem screening results into quantitative pEC50 values.
