@@ -1,74 +1,23 @@
 ---
 title: "Navigating PXR Chemical Space with High-Throughput Chemistry and Standard-Free Quantification"
-author: "Calvin Hawe, Ana Lindahl, Terry Lou"
+author:
+  - Calvin Hawe
+  - Ana Lindahl
+  - Terry Lou
 date: today
 ---
 
-```{=html}
-<style>
-.cite-tip {
-  font-size: 0.72em;
-  vertical-align: super;
-  line-height: 0;
-  font-weight: 700;
-  color: #2c7bb6;
-  text-decoration: none;
-  border-bottom: 1px dotted #2c7bb6;
-  cursor: pointer;
-  padding: 0 1px;
-}
-.cite-tip:hover { color: #1a5276; border-bottom-color: #1a5276; }
-
-#cite-tooltip {
-  position: fixed;
-  display: none;
-  background: #1c1c2e;
-  color: #e8e8f0;
-  padding: 9px 13px;
-  border-radius: 7px;
-  font-size: 0.80em;
-  font-style: normal;
-  max-width: 360px;
-  line-height: 1.55;
-  z-index: 9999;
-  pointer-events: none;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-</style>
-<div id="cite-tooltip"></div>
-<script>
-(function() {
-  const tip = document.getElementById('cite-tooltip');
-  document.querySelectorAll('.cite-tip').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      tip.textContent = el.dataset.tooltip;
-      tip.style.display = 'block';
-    });
-    el.addEventListener('mousemove', e => {
-      const pad = 14, tw = tip.offsetWidth, th = tip.offsetHeight;
-      const x = e.clientX + pad + tw > window.innerWidth  ? e.clientX - tw - pad : e.clientX + pad;
-      const y = e.clientY + pad + th > window.innerHeight ? e.clientY - th - pad : e.clientY + pad;
-      tip.style.left = x + 'px';
-      tip.style.top  = y + 'px';
-    });
-    el.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
-  });
-})();
-</script>
-```
-
 ## 1) Introduction
 
-At [OpenADMET](https://openadmet.org/), we have the mission to make therapeutic development more reliable, affordable, and effective by building open models and datasets for ADMET properties. To deliver on this goal, we are chemically mapping the "Avoidome," consisting of the enzymes, transporters, and receptors treated as "antitargets" in medicinal chemistry and pharmacology (<a href="https://doi.org/10.1016/j.cell.2024.01.003" class="cite-tip" data-tooltip="Fraser, J. S.; Murcko, M. A. (2024). Structure is beauty, but not always truth. Cell." target="_blank">1</a>). By uncovering and elucidating the molecular structures that drive activity against antitargets, the next generation of safe and effective medicines will be developed at a fraction of the traditional time and cost.
+At [OpenADMET](https://openadmet.org/), we have the mission to make therapeutic development more reliable, affordable, and effective by building open models and datasets for ADMET properties. To deliver on this goal, we are chemically mapping the "Avoidome," consisting of the enzymes, transporters, and receptors treated as "antitargets" in medicinal chemistry and pharmacology <a href="https://doi.org/10.1016/j.cell.2024.01.003" class="cite-tip" data-tooltip="Fraser, J. S.; Murcko, M. A. (2024). Structure is beauty, but not always truth. Cell." target="_blank">1</a>. By uncovering and elucidating the molecular structures that drive activity against antitargets, the next generation of safe and effective medicines will be developed at a fraction of the traditional time and cost.
 
-However, chemical space is vast. Common estimates place the number of possible distinct small organic molecules at around 10^60 (<a href="https://doi.org/10.1038/432823a" class="cite-tip" data-tooltip="Kirkpatrick, P.; Ellis, C. (2004). Chemical space. Nature." target="_blank">2</a>). For context, there are approximately 10^80 nucleons in the observable universe (<a href="https://www.aanda.org/articles/aa/full_html/2020/09/aa33910-18/aa33910-18.html" class="cite-tip" data-tooltip="Planck Collaboration; Aghanim, N. et al. (2020). Planck 2018 results. VI. Cosmological parameters. Astronomy & Astrophysics." target="_blank">3</a>). Moreover, many antitargets—particularly PXR (pregnane X receptor)—are known to be promiscuous, binding to a wide range of xenobiotic small molecules to fulfill their role in sensing and regulating metabolism (<a href="https://doi.org/10.1126/science.1060762" class="cite-tip" data-tooltip="Watkins, R. E.; Wisely, G. B.; Moore, L. B. et al. (2001). The Human Nuclear Xenobiotic Receptor PXR: Structural Determinants of Directed Promiscuity. Science." target="_blank">4</a>). In fact, PXR is so promiscuous that it is often jokingly referred to as the "promiscuous xenobiotic receptor" (<a href="https://doi.org/10.1016/S0165-6147(00)01847-2" class="cite-tip" data-tooltip="Gillam, E. M. J. (2001). The PXR ligand-binding domain: how to be picky and promiscuous at the same time. Trends in Pharmacological Sciences." target="_blank">5</a>, <a href="https://doi.org/10.1210/mend.14.1.0409" class="cite-tip" data-tooltip="Jones, S. A.; Moore, L. B.; Shenk, J. L. et al. (2000). The Pregnane X Receptor: A Promiscuous Xenobiotic Receptor That Has Diverged during Evolution. Molecular Endocrinology." target="_blank">6</a>).
+However, chemical space is vast. Common estimates place the number of possible distinct small organic molecules at around 10^60 <a href="https://doi.org/10.1038/432823a" class="cite-tip" data-tooltip="Kirkpatrick, P.; Ellis, C. (2004). Chemical space. Nature." target="_blank">2</a>. For context, there are approximately 10^80 nucleons in the observable universe <a href="https://www.aanda.org/articles/aa/full_html/2020/09/aa33910-18/aa33910-18.html" class="cite-tip" data-tooltip="Planck Collaboration; Aghanim, N. et al. (2020). Planck 2018 results. VI. Cosmological parameters. Astronomy & Astrophysics." target="_blank">3</a>. Moreover, many antitargets—particularly PXR (pregnane X receptor)—are known to be promiscuous, binding to a wide range of xenobiotic small molecules to fulfill their role in sensing and regulating metabolism <a href="https://doi.org/10.1126/science.1060762" class="cite-tip" data-tooltip="Watkins, R. E.; Wisely, G. B.; Moore, L. B. et al. (2001). The Human Nuclear Xenobiotic Receptor PXR: Structural Determinants of Directed Promiscuity. Science." target="_blank">4</a>. In fact, PXR is so promiscuous that it is often jokingly referred to as the "promiscuous xenobiotic receptor" <a href="https://doi.org/10.1016/S0165-6147(00)01847-2" class="cite-tip" data-tooltip="Gillam, E. M. J. (2001). The PXR ligand-binding domain: how to be picky and promiscuous at the same time. Trends in Pharmacological Sciences." target="_blank">5</a>, <a href="https://doi.org/10.1210/mend.14.1.0409" class="cite-tip" data-tooltip="Jones, S. A.; Moore, L. B.; Shenk, J. L. et al. (2000). The Pregnane X Receptor: A Promiscuous Xenobiotic Receptor That Has Diverged during Evolution. Molecular Endocrinology." target="_blank">6</a>.
 
 In order to deeply understand the precise chemical moieties that drive a small molecule's activity against an antitarget, developing an approach that allows access to broad swaths of chemical space and extends beyond commercially-available molecules and FDA-approved medicines is key. Screening conventional chemical decks can serve as an insightful medicinal chemistry starting point, but generating the data to subsequently map the structure-activity relationship (SAR) landscape surrounding a target—or in this case, an antitarget—necessitates the synthesis and testing of novel compounds and analogs at scale to comprehensively explore activity cliffs, selectivity, and potency-driving structural motifs.
 
 At [Octant](https://www.octant.bio/), we routinely synthesize and screen tens of thousands of molecules on a weekly basis for our drug programs using direct-to-biology (D2B) approaches. D2B enables greater speed, lower cost, and broader coverage of chemical space by assaying reaction mixtures directly without purification. At Octant, this concept is put into practice through the integration of high-throughput chemistry (HTChem) with high-throughput screening (HTS), where nanoscale chemical synthesis enables the generation of large compound libraries that can be screened at scale.
 
-Fundamental to a D2B workflow is the screening of crude reaction mixtures (<a href="https://doi.org/10.1039/D1SC03551G" class="cite-tip" data-tooltip="Thomas, R. P.; Heap, R. E.; Zappacosta, F. et al. (2021). A direct-to-biology high-throughput chemistry approach to reactive fragment screening. Chemical Science." target="_blank">7</a>). While efficient for discovery, screening crude mixtures poses a challenge when using D2B data for machine-learning model training. This is due to the confounding characteristics of crude reaction mixtures, including unidentified side-product formation, potentially biologically active reagents and byproducts, and, notably, variable synthesis yields of the intended product that obscure its true concentration and assay readout. In drug discovery, these challenges can be addressed by larger-quantity resynthesis and purification of select compounds to confirm potency and on-target binding. However, this approach does not easily scale to the size and breadth needed for machine-learning datasets, where training useful regression models generally requires large numbers of quantitative data points. At Octant, we have found that by pairing the appropriate analytical infrastructure with cell-based D2B screening, reliable high-throughput potency data for newly-synthesized compounds can be obtained.
+Fundamental to a D2B workflow is the screening of crude reaction mixtures <a href="https://doi.org/10.1039/D1SC03551G" class="cite-tip" data-tooltip="Thomas, R. P.; Heap, R. E.; Zappacosta, F. et al. (2021). A direct-to-biology high-throughput chemistry approach to reactive fragment screening. Chemical Science." target="_blank">7</a>. While efficient for discovery, screening crude mixtures poses a challenge when using D2B data for machine-learning model training. This is due to the confounding characteristics of crude reaction mixtures, including unidentified side-product formation, potentially biologically active reagents and byproducts, and, notably, variable synthesis yields of the intended product that obscure its true concentration and assay readout. In drug discovery, these challenges can be addressed by larger-quantity resynthesis and purification of select compounds to confirm potency and on-target binding. However, this approach does not easily scale to the size and breadth needed for machine-learning datasets, where training useful regression models generally requires large numbers of quantitative data points. At Octant, we have found that by pairing the appropriate analytical infrastructure with cell-based D2B screening, reliable high-throughput potency data for newly-synthesized compounds can be obtained.
 
 In this post, we will describe the development of a method for yield-based potency correction via charged aerosol detection (CAD) to harness the scale of a high-throughput D2B platform while generating data that reflects the fidelity of pure compound screening.
 
@@ -78,15 +27,20 @@ OpenADMET's [PXR induction challenge](https://openadmet.ghost.io/predicting-pxr-
 
 ![](<figures/static/Figure 1 - PXR Dataset Size + HTChem Schematic.png>){width=100%}
 
-**Figure 1:**
-**A.** As of May 2026, there are 657 small molecules with PXR activity data in the ChEMBL database. This number is contrasted with the number of compounds that OpenADMET has screened against PXR.
+::: {.figure-caption}
+**Figure 1:**\
+**A.** As of May 2026, there are 657 small molecules with PXR activity data in the ChEMBL database. This number is contrasted with the number of compounds that OpenADMET has screened against PXR.\
 **B.** A method to design a "core" for HTChem is to disconnect a chemical bond from a known active compound. Then, a novel library of analogs to the reference molecule is synthesized by reacting an amenable fragment set with the core molecule.
+:::
 
 HTChem library size can be scaled up (to over 10k analogs from a single core) or refined for a more targeted approach to exploring SAR. However, regardless of library size, HTChem reaction yields can vary significantly from compound to compound, even after pre-synthesis optimization of reaction conditions. Thus, in order to more confidently assign a potency value to an HTChem molecule, incorporation of reaction yield into the calculation of the EC50 is crucial so that potency is determined from the actual concentration of the active species. This process of EC50 "correction" is done by retroactively adjusting the crude, uncorrected EC50 in a manner proportional to the reaction yield (Eq. 1). Equivalently, the correction can be understood as adjusting the nominal concentration of a reaction initially assumed to have had 100% yield by a factor corresponding to the observed yield (Eq. 2). Conceptually, this can be visualized by adjusting the x-axis of a dose-response curve based upon the true concentration of the HTChem molecule. This process of EC50 correction, and the subsequent movement of a data point when comparing a crude HTChem compound's pEC50 to its pure-version pEC50, is animated below (Fig. 2).
 
-$$\text{Eq. 1} \qquad \text{Corrected EC}_{50}\text{ (M)} = \text{Crude EC}_{50}\text{ (M)} \times \text{Yield (\%)}$$
-
-$$\text{Eq. 2} \qquad \text{True Concentration (M)} = \text{Nominal Crude Concentration (M)} \times \text{Yield (\%)}$$
+$$
+\begin{aligned}
+\text{Eq. 1} \qquad \text{Corrected EC}_{50}\text{ (M)} &= \text{Crude EC}_{50}\text{ (M)} \times \text{Yield (\%)} \\[4pt]
+\text{Eq. 2} \qquad \text{True Concentration (M)} &= \text{Nominal Crude Concentration (M)} \times \text{Yield (\%)}
+\end{aligned}
+$$
 
 ::: {layout-ncol=2}
 ![](<figures/static/Figure 2 Left - OCNT-2315950 Yield Correction.gif>)
@@ -94,27 +48,27 @@ $$\text{Eq. 2} \qquad \text{True Concentration (M)} = \text{Nominal Crude Concen
 ![](<figures/static/Figure 2 Right - OCNT-2309356 Yield Correction.gif>)
 :::
 
+::: {.figure-caption}
 **Figure 2:** The process of EC50 correction, along with HTChem-to-pure comparisons, is shown with two example compounds: OCNT-2315950 and OCNT-2309356.
 
 - **Scene 1:** Dose-response curves and CAD-based yields were collected for the crude HTChem compounds.
 - **Scene 2:** The DRC is shifted proportionally to the yields of the crude HTChem reactions.
 - **Scene 3:** Pure versions of the same HTChem compounds were screened in duplicate, and EC50s derived from the DRCs were averaged.
 - **Scene 4:** A plot comparing crude pEC50 (y-axis) and pure pEC50 (x-axis) first depicts the original correlation without yield-based correction, and then—through an arrow animation—shows the movement of the data point on the plot following EC50 correction.
+:::
 
 To explore PXR chemical space with HTChem, we selected two of our most potent PXR activators and treated them as two distinct chemical series, much as a medicinal chemist would for a traditional target. The two selected reference compounds showed a preliminary sign of SAR with chemically-similar analogs in the 11k screening deck. By disconnecting their amide bonds, we designed two carboxylic acid HTChem cores to react with a diversity-downselected set of 1,536 fragments bearing a complementary amine functional group. Through this "core-and-fragment" approach, we synthesized two HTChem libraries derived from known PXR-inducing compounds, allowing us to systematically examine how local structural changes influence PXR activation. Additionally, because the reference compounds have been co-crystallized with PXR by the OpenADMET team at UCSF, the binding pocket and fragment-facing orientation of novel hits identified from these HTChem libraries can be analyzed and inferred (Video 1).
 
 **Video 1:** Exploring PXR Chemical Space
 
 ```{=html}
-<a href="https://youtu.be/dD8dMO19SO4" target="_blank" style="display:block; position:relative; border-radius:6px; overflow:hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.12); margin-bottom:1em;">
-  <img src="https://img.youtube.com/vi/dD8dMO19SO4/maxresdefault.jpg"
-       style="width:100%; display:block;">
-  <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.25);">
-    <div style="width:68px; height:48px; background:#ff0000; border-radius:12px; display:flex; align-items:center; justify-content:center;">
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><polygon points="9.5,7 17,12 9.5,17"/></svg>
-    </div>
-  </div>
-</a>
+<div class="video-embed">
+  <iframe src="https://www.youtube-nocookie.com/embed/dD8dMO19SO4"
+          title="Exploring PXR Chemical Space"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+</div>
 ```
 
 However, the screening of crude D2B libraries poses two intrinsic questions:
@@ -127,33 +81,37 @@ Without answers to these questions, one may argue that the data generated from D
 
 ## 3) Development of a UHPLC-CAD-MS Method for the Characterization and Quantification of Crude, High-Throughput Chemical Reaction Mixtures
 
-To support meaningful pEC50 interpretation from crude D2B screens, where apparent potency depends directly on true product concentration, we needed an analytical readout that is both molecule-agnostic and capable of converting chromatographic signal directly into product mass. Within the pharmaceutical industry, CAD has been employed for precisely this purpose (<a href="https://doi.org/10.1021/acsmedchemlett.2c00441" class="cite-tip" data-tooltip="Roecker, A. J.; Schirripa, K. M.; Loughran, H. M. et al. (2023). Pyrazole Ureas as Low Dose, CNS Penetrant Glucosylceramide Synthase Inhibitors for the Treatment of Parkinson's Disease. ACS Medicinal Chemistry Letters." target="_blank">8</a>), eliminating the need to purchase or synthesize analytical reference standards for every novel compound produced (an approach that would not scale with HTChem). CAD delivers "near-universal detection" (<a href="https://www.thermofisher.com/blog/analyteguru/five-reasons-to-use-charged-aerosol-detection-cad/" class="cite-tip" data-tooltip="Cross, T. (2018). 5 Reasons to Use Charged Aerosol Detection (CAD). Thermo Fisher Scientific Analyte Guru blog." target="_blank">9</a>) by evaporating the chromatographic mobile phase and leaving behind non-volatile particles, which are then charged and quantified by measuring the resulting current. The signal scales with particle mass largely independent of analyte structure, producing peak areas that reflect molecule abundance far more closely than other analytical techniques such as mass spectrometry, where signal intensity is strongly influenced by ionization efficiency. Prior to the CAD integration, Octant's analytical workflow had been LC-MS-based, which was well-matched to HTChem synthesis throughput, but unable to deliver standard-free quantitative measurement of reaction outcomes.
+To support meaningful pEC50 interpretation from crude D2B screens, where apparent potency depends directly on true product concentration, we needed an analytical readout that is both molecule-agnostic and capable of converting chromatographic signal directly into product mass. Within the pharmaceutical industry, CAD has been employed for precisely this purpose <a href="https://doi.org/10.1021/acsmedchemlett.2c00441" class="cite-tip" data-tooltip="Roecker, A. J.; Schirripa, K. M.; Loughran, H. M. et al. (2023). Pyrazole Ureas as Low Dose, CNS Penetrant Glucosylceramide Synthase Inhibitors for the Treatment of Parkinson's Disease. ACS Medicinal Chemistry Letters." target="_blank">8</a>, eliminating the need to purchase or synthesize analytical reference standards for every novel compound produced (an approach that would not scale with HTChem). CAD delivers "near-universal detection" <a href="https://www.thermofisher.com/blog/analyteguru/five-reasons-to-use-charged-aerosol-detection-cad/" class="cite-tip" data-tooltip="Cross, T. (2018). 5 Reasons to Use Charged Aerosol Detection (CAD). Thermo Fisher Scientific Analyte Guru blog." target="_blank">9</a> by evaporating the chromatographic mobile phase and leaving behind non-volatile particles, which are then charged and quantified by measuring the resulting current. The signal scales with particle mass largely independent of analyte structure, producing peak areas that reflect molecule abundance far more closely than other analytical techniques such as mass spectrometry, where signal intensity is strongly influenced by ionization efficiency. Prior to the CAD integration, Octant's analytical workflow had been LC-MS-based, which was well-matched to HTChem synthesis throughput, but unable to deliver standard-free quantitative measurement of reaction outcomes.
 
 At Octant, we have developed a UHPLC-CAD-MS method that enables standard-free absolute quantification of crude reaction mixtures from the HTChem platform, allowing us to characterize reaction yields and subsequently correct EC50s. The method reduces to a single universal calibration relationship between on-column mass (in nanograms) and CAD peak area (in picoampere-minutes).
 
 $$\text{Eq. 3} \qquad \text{Mass (ng)} = 12.5 \times \text{CAD peak area (pA·min)}$$
 
-The 12.5 ng/(pA·min) conversion constant applies to any analyte without prior knowledge of its structure or response factor. Across a calibration set of 300+ structurally-diverse compounds, the inter-analyte coefficient of variation was 26.79% at a standard injection mass of 250 ng and 31.74% with respect to overall slope. The lower limit of quantification (LLOQ) is 1.0 pA·min, which was derived from a 10:1 signal-to-noise ratio (a standard analytical chemistry benchmark) (<a href="https://doi.org/10.1016/j.jpba.2023.115357" class="cite-tip" data-tooltip="Huang, Y.; Lu, H.; Li, Z. et al. (2023). Development of HPLC-CAD method for simultaneous quantification of nine related substances in ursodeoxycholic acid. Journal of Pharmaceutical and Biomedical Analysis." target="_blank">10</a>). These quantities allow us to quantify uncertainty in the yield estimate, which can then be propagated together with the error from the DRC fit to determine the uncertainty in the final corrected EC50.
+The 12.5 ng/(pA·min) conversion constant applies to any analyte without prior knowledge of its structure or response factor. Across a calibration set of 300+ structurally-diverse compounds, the inter-analyte coefficient of variation was 26.79% at a standard injection mass of 250 ng and 31.74% with respect to overall slope. The lower limit of quantification (LLOQ) is 1.0 pA·min, which was derived from a 10:1 signal-to-noise ratio (a standard analytical chemistry benchmark) <a href="https://doi.org/10.1016/j.jpba.2023.115357" class="cite-tip" data-tooltip="Huang, Y.; Lu, H.; Li, Z. et al. (2023). Development of HPLC-CAD method for simultaneous quantification of nine related substances in ursodeoxycholic acid. Journal of Pharmaceutical and Biomedical Analysis." target="_blank">10</a>. These quantities allow us to quantify uncertainty in the yield estimate, which can then be propagated together with the error from the DRC fit to determine the uncertainty in the final corrected EC50.
 
-To deploy CAD in production, we integrated a Thermo Scientific Corona Veo RS instrument into a UHPLC-CAD-MS configuration in which post-column flow is split between the CAD and a Thermo TSQ Quantis triple quadrupole mass spectrometer (Fig. 3). The CAD provides the quantitative readout, and the MS handles peak identification through alignment of retention times with CAD-detected species. This division of labor is fundamental to the method: the CAD tells us "how much," and the MS tells us "what." An inverse gradient arising from a second pump—shown at the bottom of the LC stack in Figure 3—mixes with the effluent post-column to maintain constant total organic composition entering the CAD, mitigating response variability that results from the CAD's intrinsic sensitivity to mobile phase composition (<a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-73449-cad-inverse-gradient-tn73449-en.pdf" class="cite-tip" data-tooltip="Grosse, S.; Muellner, T.; Lovejoy, K. et al. (2020). Why use charged aerosol detection with inverse gradient? Thermo Fisher Scientific Technical Note 73449." target="_blank">11</a>, <a href="https://doi.org/10.1016/j.chroma.2015.05.050" class="cite-tip" data-tooltip="Russell, J. J.; Heaton, J. C.; Underwood, T. et al. (2015). Performance of charged aerosol detection with hydrophilic interaction chromatography. Journal of Chromatography A." target="_blank">12</a>).
+To deploy CAD in production, we integrated a Thermo Scientific Corona Veo RS instrument into a UHPLC-CAD-MS configuration in which post-column flow is split between the CAD and a Thermo TSQ Quantis triple quadrupole mass spectrometer (Fig. 3). The CAD provides the quantitative readout, and the MS handles peak identification through alignment of retention times with CAD-detected species. This division of labor is fundamental to the method: the CAD tells us "how much," and the MS tells us "what." An inverse gradient arising from a second pump—shown at the bottom of the LC stack in Figure 3—mixes with the effluent post-column to maintain constant total organic composition entering the CAD, mitigating response variability that results from the CAD's intrinsic sensitivity to mobile phase composition <a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-73449-cad-inverse-gradient-tn73449-en.pdf" class="cite-tip" data-tooltip="Grosse, S.; Muellner, T.; Lovejoy, K. et al. (2020). Why use charged aerosol detection with inverse gradient? Thermo Fisher Scientific Technical Note 73449." target="_blank">11</a>, <a href="https://doi.org/10.1016/j.chroma.2015.05.050" class="cite-tip" data-tooltip="Russell, J. J.; Heaton, J. C.; Underwood, T. et al. (2015). Performance of charged aerosol detection with hydrophilic interaction chromatography. Journal of Chromatography A." target="_blank">12</a>.
 
 ![](<figures/static/Figure 3 - UHPLC-CAD-MS setup.png>){width=100%}
 
+::: {.figure-caption}
 **Figure 3:** The UHPLC-CAD-MS setup at Octant is shown above. The CAD quantifies abundance, while the MS is responsible for CAD peak identification. Chromatographic separation is carried out with a 50 mm Waters ACQUITY HSS C18 column over a 4-minute method. Comprehensive method details can be found in the blog post's GitHub repository.
+:::
 
 Reaching the final CAD peak area-to-mass equation required developing a systematic method against a defined set of requirements. The method had to be (i) rapid enough to keep pace with HTChem synthesis throughput, (ii) reproducible across instrument runs, (iii) quantitative across structurally diverse analytes, (iv) accurate and specific enough to assign each chromatographic peak to a single chemical species, and (v) wide enough in dynamic range to quantify the range of yields encountered in HTChem. The first iteration of our method, run on a panel of analytical reference standards using common reverse-phase C18 chromatographic conditions, fell short on two fronts: individual calibration curves were nonlinear, and the response slope varied substantially from analyte to analyte.
 
 The final diluent and mobile phase compositions selected for the method addressed the linearity issue and deviate from a typical reversed-phase C18 LC-MS configuration. Specifically, to mitigate the nonlinearity attributed to analyte solubility, MeOH is included in both the diluent and mobile phase at 20% v/v. At higher injection masses, the standard reverse-phase conditions could not keep lipophilic drug-like analytes fully solubilized at the moment of injection, compressing the dynamic range. A co-solvent of 20% MeOH restored linearity across our dynamic range of interest to adequately capture yield across the HTChem platform.
 
-Apart from solvent effects (which were already addressed by the inverse gradient), the most reported and verified driver of variable CAD response is salt formation (<a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-72806-uhplc-charged-aerosol-detection-tn72806-en.pdf" class="cite-tip" data-tooltip="Menz, M.; Eggart, B.; Lovejoy, K. et al. (2018). Charged aerosol detection - factors affecting uniform analyte response. Thermo Fisher Scientific Technical Note 72806." target="_blank">13</a>). When an analyte forms a salt with a mobile phase additive, the total mass of the CAD particle is the analyte plus its associated counterion. Our original mobile phase used formic acid, and our drug-like chemical matter contained variable numbers of basic nitrogen atoms that would protonate and ionically bond to formate counterions. Quinidine is a representative example with its two basic nitrogens (a tertiary amine, pKa 8.6, and a quinoline nitrogen, pKa 4.2). By readily forming a doubly protonated diformate salt under 0.1% formic acid-containing LC conditions, quinidine's effective mass at the CAD detector is increased by 1.28x (Fig. 4). This can be addressed via "salt-mass correction," in which CAD peak areas are adjusted on a per-analyte basis using well-characterized pKa values. However, our broader objective is the high-throughput characterization of diverse, novel chemical matter, and salt-mass correction is only as good as the pKa estimate. Existing pKa prediction tools such as Chemaxon and RDKit routinely disagree with experimental values (particularly for novel scaffolds) by amounts that would undermine salt-mass correction accuracy. For a known compound library, salt-mass correction is reasonable, but for the kind of chemical space HTChem is built to explore, it is not tractable.
+Apart from solvent effects (which were already addressed by the inverse gradient), the most reported and verified driver of variable CAD response is salt formation <a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-72806-uhplc-charged-aerosol-detection-tn72806-en.pdf" class="cite-tip" data-tooltip="Menz, M.; Eggart, B.; Lovejoy, K. et al. (2018). Charged aerosol detection - factors affecting uniform analyte response. Thermo Fisher Scientific Technical Note 72806." target="_blank">13</a>. When an analyte forms a salt with a mobile phase additive, the total mass of the CAD particle is the analyte plus its associated counterion. Our original mobile phase used formic acid, and our drug-like chemical matter contained variable numbers of basic nitrogen atoms that would protonate and ionically bond to formate counterions. Quinidine is a representative example with its two basic nitrogens (a tertiary amine, pKa 8.6, and a quinoline nitrogen, pKa 4.2). By readily forming a doubly protonated diformate salt under 0.1% formic acid-containing LC conditions, quinidine's effective mass at the CAD detector is increased by 1.28x (Fig. 4). This can be addressed via "salt-mass correction," in which CAD peak areas are adjusted on a per-analyte basis using well-characterized pKa values. However, our broader objective is the high-throughput characterization of diverse, novel chemical matter, and salt-mass correction is only as good as the pKa estimate. Existing pKa prediction tools such as Chemaxon and RDKit routinely disagree with experimental values (particularly for novel scaffolds) by amounts that would undermine salt-mass correction accuracy. For a known compound library, salt-mass correction is reasonable, but for the kind of chemical space HTChem is built to explore, it is not tractable.
 
-![](<figures/static/Figure 4 - Quinidine Salt.png>){width=100%}
+![](<figures/static/Figure 4 - Quinidine Salt.png>){width=55% fig-align="center"}
 
+::: {.figure-caption}
 **Figure 4:** Quinidine's nitrogen atoms are protonated at 0.1% formic acid (v/v), leading to formate salt complexes that inflate CAD peak area and lead to inconsistencies in response.
+:::
 
 Rather than correcting for it, the cleaner solution was to remove formic acid from the mobile phase. With no formic acid, no formate salts form, and no per-analyte correction is needed. Predictably, due to formic acid's role in controlling the pH and minimizing undesirable interactions with the stationary phase, the immediate consequence was a degradation of chromatographic peak shape. Through targeted reoptimization of the LC method—specifically, a 1.8 µm Waters ACQUITY UPLC HSS C18, a shallow gradient segment where most compounds elute, and pre-column compartment heating to 60 °C—chromatographic quality was recovered, and the corresponding tightening of inter-analyte CAD response confirmed that the salt-formation pathway had been a meaningful contributor to response variability.
 
-To further improve linearity and reduce response variability, two parameters on the CAD itself were optimized: the power function value (PFV) and the CAD evaporator temperature (EvapT). A PFV of 1.15 produced the most robust linear response across diverse drug-like analytes and was implemented into the method. For the EvapT, it is known that higher temperatures decrease baseline noise by ensuring complete evaporation of mobile phase solvent microdroplets and semi-volatile trace impurities—improving signal-to-noise and lowering the achievable lower limit of quantification (LLOQ)—but push more intended analytes into the semi-volatile regime (where some fraction of the analyte mass evaporates with the mobile phase before reaching the detector) (<a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-72806-uhplc-charged-aerosol-detection-tn72806-en.pdf" class="cite-tip" data-tooltip="Menz, M.; Eggart, B.; Lovejoy, K. et al. (2018). Charged aerosol detection - factors affecting uniform analyte response. Thermo Fisher Scientific Technical Note 72806." target="_blank">13</a>). By testing evaporator temperatures ranging from 20 °C to 95 °C against a reference panel consisting of molecules used in our ADMET assays, we identified 65 °C as the optimal compromise between noise reduction and preservation of non-volatile analyte behavior. However, some analytes of interest do behave as semi-volatile at 65 °C, but which molecules will behave this way cannot be confidently predicted in advance since volatility is governed by boiling point and enthalpy of vaporization, neither practical to measure nor reliably predicted. Molecular weight can serve as a general proxy for volatility, but in order to catch these cases of semi-volatility in a robust manner, we apply a routine QC step in which suspect analytes are reinjected with the EvapT lowered to its minimum (20 °C). A substantial increase in CAD peak area (beyond what would be expected from a noisier baseline) flags semi-volatile behavior, while a small change is consistent with non-volatile behavior. Although an EvapT of 20 °C produces a noisier baseline and therefore less precise yields, it provides more accurate yields than 65 °C for compounds that behave as semi-volatile at 65 °C. The cumulative effect of these systematic interventions—diluent and mobile phase optimization, formic acid removal, LC method recovery, PFV tuning, and EvapT optimization—was a UHPLC-CAD-MS method that produced near-uniform response across structurally diverse drug-like chemical matter. Ultimately, our protocol for determining yield utilizing CAD demonstrated robust validation, which in turn allows us to correct the EC50 of our HTChem-synthesized libraries.
+To further improve linearity and reduce response variability, two parameters on the CAD itself were optimized: the power function value (PFV) and the CAD evaporator temperature (EvapT). A PFV of 1.15 produced the most robust linear response across diverse drug-like analytes and was implemented into the method. For the EvapT, it is known that higher temperatures decrease baseline noise by ensuring complete evaporation of mobile phase solvent microdroplets and semi-volatile trace impurities—improving signal-to-noise and lowering the achievable lower limit of quantification (LLOQ)—but push more intended analytes into the semi-volatile regime (where some fraction of the analyte mass evaporates with the mobile phase before reaching the detector) <a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-72806-uhplc-charged-aerosol-detection-tn72806-en.pdf" class="cite-tip" data-tooltip="Menz, M.; Eggart, B.; Lovejoy, K. et al. (2018). Charged aerosol detection - factors affecting uniform analyte response. Thermo Fisher Scientific Technical Note 72806." target="_blank">13</a>. By testing evaporator temperatures ranging from 20 °C to 95 °C against a reference panel consisting of molecules used in our ADMET assays, we identified 65 °C as the optimal compromise between noise reduction and preservation of non-volatile analyte behavior. However, some analytes of interest do behave as semi-volatile at 65 °C, but which molecules will behave this way cannot be confidently predicted in advance since volatility is governed by boiling point and enthalpy of vaporization, neither practical to measure nor reliably predicted. Molecular weight can serve as a general proxy for volatility, but in order to catch these cases of semi-volatility in a robust manner, we apply a routine QC step in which suspect analytes are reinjected with the EvapT lowered to its minimum (20 °C). A substantial increase in CAD peak area (beyond what would be expected from a noisier baseline) flags semi-volatile behavior, while a small change is consistent with non-volatile behavior. Although an EvapT of 20 °C produces a noisier baseline and therefore less precise yields, it provides more accurate yields than 65 °C for compounds that behave as semi-volatile at 65 °C. The cumulative effect of these systematic interventions—diluent and mobile phase optimization, formic acid removal, LC method recovery, PFV tuning, and EvapT optimization—was a UHPLC-CAD-MS method that produced near-uniform response across structurally diverse drug-like chemical matter. Ultimately, our protocol for determining yield utilizing CAD demonstrated robust validation, which in turn allows us to correct the EC50 of our HTChem-synthesized libraries.
 
 ## 4) Propagation of Standard Error for Corrected pEC50
 
@@ -169,7 +127,9 @@ Since these three contributions are treated as independent, their variances are 
 
 ![](<figures/static/Figure 5 - CAD-corrected pEC50 Uncertainty.png>){width=100%}
 
+::: {.figure-caption}
 **Figure 5:** CAD-corrected pEC50 standard error is estimated by combining three independent contributions, which are the DRC fitting error (panel 1), the CAD peak area measurement error (panel 2), and between-compound variability in the universal CAD calibration slope (panel 3). The CAD-derived CV terms are converted to pEC50 units and combined with the DRC fitting error in quadrature to obtain a compound-specific standard error.
+:::
 
 ## 5) Validation of Yield-Based EC50 Correction
 
@@ -179,7 +139,9 @@ Next, to determine whether our standard-free absolute quantification UHPLC-CAD-M
 ![](<figures/static/Figure 6 - Validation Experiment Comparisons.png>){width=100%}
 :::
 
+::: {.figure-caption}
 **Figure 6:** Twenty PXR agonists with existing pure-compound screening data were synthesized and screened as crude products. The same 20 compounds were then resynthesized as crudes, semi-purified, and screened again. This generated three matched screening datasets for each compound: pure, crude, and semi-pure. The comparison of uncorrected crude-to-pure pEC50 is shown on the left (**A**), the corrected crude-to-pure pEC50 comparison is shown in the middle (**B**), and the corrected crude-to-semi-pure pEC50 comparison is shown on the right (**C**). The diagonal red-dotted line of each plot represents complete agreement, and the gray dotted lines on either side represent ±0.5 pEC50 units. Crude and semi-pure sample concentrations were determined using CAD, and yield-adjusted pEC50 values were calculated accordingly. In panels A and B, points are colored by the CAD-determined crude product yield. In panel C, points are colored by the average yield of the corresponding crude and semi-pure samples. Error bars represent 95% confidence intervals. Plots were generated using Python.
+:::
 
 These results allow us to return to the two original questions surrounding the use of D2B for model-training data generation. First, can the true concentration of a crude HTChem compound be determined at nanoscale? The CAD-MS yield-determination method provides a practical answer by enabling concentration correction without compound-specific standards. Second, is the observed assay activity driven by the intended product or by crude reaction impurities? The strong correlation between crude and semi-purified samples suggests that non-product reaction components—excess fragment, unreacted core, coupling reagents, and polar byproducts—do not substantially affect the assay readout. With these questions addressed, we can advance to larger-scale D2B experiments to explore the chemical space around PXR induction.
 
@@ -189,17 +151,23 @@ By bringing together HTChem, HTS, and CAD-MS, we are able to build, test, and ch
 
 ![](<figures/static/Figure 7 - ChemDraw SAR.png>){width=100%}
 
+::: {.figure-caption}
 **Figure 7:** Ten related compounds from a 96-compound HTChem synthesis library are shown. The pink bond indicates the amide coupling linkage, and pEC50 values are shown underneath each compound.
+:::
 
 From these HTChem SAR insights, the ability to characterize crude reaction yields, and our confidence that amide coupling impurities have limited impact on the PXR activation assay, we can proceed with additional HTChem library syntheses from two hit-derived carboxylic acid cores (Fig. 8). One particular core, OCNT-0002416, was designed from the α-methyl-substituted series (Compounds F-J in Fig. 7), which showed interesting SAR patterns that we wanted to explore further. The full HTChem libraries were screened at two concentrations—10 µM and 30 µM—to probe for activity while catching compounds with rollover activity (i.e., active at lower concentrations but losing activity at higher concentrations). Primary screen hits, as well as chemically-similar molecules to these hits (called "chemisimilars"), were selected for follow-up DRC collection to assess EC50. Specifically, 228 of the original 1,536 compounds per library had 9-point dose-response curves generated from 5 nM to 50 µM. With CAD-determined reaction yields for these 456 molecules, corrected pEC50s were calculated, and these data are presented in the interactive plots below (Fig. 9A-E).
 
 ![](<figures/static/Figure 8 - HTChem Libraries.png>){width=100%}
 
-**Figure 8:** Two known PXR agonists were used to design carboxylic acid HTChem cores, which underwent amide coupling with a library of amine-bearing fragment molecules.
-**A.** Reference hit OCNT-2317298 was used to design the OCNT-2432456 core, which was reacted with a collection of 1,536 diversity-selected amines.
+::: {.figure-caption}
+**Figure 8:** Two known PXR agonists were used to design carboxylic acid HTChem cores, which underwent amide coupling with a library of amine-bearing fragment molecules.\
+**A.** Reference hit OCNT-2317298 was used to design the OCNT-2432456 core, which was reacted with a collection of 1,536 diversity-selected amines.\
 **B.** Reference hit OCNT-2308748 was used to design the OCNT-0002416 core, which was reacted with a collection of 1,536 diversity-selected amines.
+:::
 
+::: {.figure-caption}
 **Figure 9A:** Beeswarm overview of both HTChem libraries and the 96-compound semi-pure library, colour-coded by CAD-derived synthesis yield.
+:::
 
 ::: {.column-page}
 ```{=html}
@@ -212,7 +180,9 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 ```
 :::
 
+::: {.figure-caption}
 **Figure 9B:** OCNT-2432456 library — uncorrected vs. corrected pEC50, colour-coded by chemical similarity to the reference hit.
+:::
 
 ::: {.column-page}
 ```{=html}
@@ -225,7 +195,9 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 ```
 :::
 
+::: {.figure-caption}
 **Figure 9C:** OCNT-0002416 library — uncorrected vs. corrected pEC50, colour-coded by chemical similarity to the reference hit.
+:::
 
 ::: {.column-page}
 ```{=html}
@@ -238,7 +210,9 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 ```
 :::
 
+::: {.figure-caption}
 **Figure 9D:** pEC50 movement following yield-based correction for the 30 most potent hits from the OCNT-2432456 library, colour-coded by chemical similarity to the reference hit.
+:::
 
 ::: {.column-page}
 ```{=html}
@@ -251,7 +225,9 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 ```
 :::
 
+::: {.figure-caption}
 **Figure 9E:** pEC50 movement following yield-based correction for the 30 most potent hits from the OCNT-0002416 library, colour-coded by chemical similarity to the reference hit.
+:::
 
 ::: {.column-page}
 ```{=html}
@@ -264,7 +240,9 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 ```
 :::
 
+::: {.figure-caption}
 **Figure 9:** Two known PXR agonists were used to design carboxylic acid HTChem cores, which underwent amide coupling with a library of amine-bearing fragment molecules. A beeswarm plot of the two HTChem libraries and the 96-compound "semi-pure" HTChem synthesis is presented, with compounds color-coded based on CAD-derived synthesis yield (**A**). The two HTChem libraries are plotted with respect to their uncorrected (x-axis) and corrected (y-axis) pEC50 values, with color coding based on chemical similarity to the reference hit from which the core was derived (**B, C**). The pEC50 movement following yield-based correction for the 30 most potent hits from the two PXR HTChem libraries is shown, with color coding based on chemical similarity to the reference hit (**D, E**).
+:::
 
 From these HTChem syntheses, broad observations can be made, such as the OCNT-0002416 core library being more potent on average than the OCNT-2432456 core library, but also having more failed syntheses (Fig. 9A). Among the compounds from these libraries identified as primary screen hits or chemisimilars, we advanced both groups in parallel to DRC collection and CAD quantification. In contrast to primary screen hits, chemisimilar compounds are not active in primary screens, possibly due to failed synthesis, insufficient product yield, or a true activity cliff. Using our yield quantification capabilities, we can identify compounds with insufficient yield that would otherwise have led to false-negative data. This consideration highlights the importance of integrating CAD with HTChem for model-training purposes, where low-yielding or failed syntheses could otherwise be misclassified as true biological inactivity.
 
