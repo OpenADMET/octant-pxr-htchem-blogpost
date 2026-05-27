@@ -1,0 +1,18 @@
+project:
+  type: website
+  render:
+    - index.qmd
+  resources:
+    - figures/
+
+website:
+  title: "Navigating PXR Chemical Space with HTChem and Standard-Free Quantification"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    toc-title: "Contents"
+    embed-resources: false
+    title-block-banner: true

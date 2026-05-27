@@ -1,0 +1,10 @@
+/.quarto/
+**/*.quarto_ipynb
+/_site/
+/index.html
+/index_files/
+data/**/*.html
+data/**/*_files/
+data/processed/figure-payloads/*.json
+__pycache__/
+.venv/
