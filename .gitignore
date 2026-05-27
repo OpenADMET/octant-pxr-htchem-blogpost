@@ -1,5 +1,6 @@
 /.quarto/
 **/*.quarto_ipynb
+**/*.otter.*
 /_site/
 /index.html
 /index_files/

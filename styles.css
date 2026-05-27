@@ -1,0 +1,155 @@
+/*-- scss:rules --*/
+
+/* ==========================================================================
+   PXR / HTChem blog post — custom styling layered on top of the cosmo theme.
+   Mirrors the figure-caption and citation-tooltip patterns from the
+   OpenADMET CYP blog post.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Figure captions
+   Distinct from body text: smaller, greyer, tighter line height. Authored in
+   the .qmd as ::: {.figure-caption} fenced divs immediately after each figure.
+   -------------------------------------------------------------------------- */
+
+.figure-caption {
+  font-size: 0.85em;
+  color: #555;
+  line-height: 1.45;
+  margin-top: 0.5em;
+  margin-bottom: 2em;
+}
+
+/* --------------------------------------------------------------------------
+   2. Citation tooltips
+   Superscript citation markers (<a class="cite-tip" data-tooltip="...">) reveal
+   the full reference on hover via a pure-CSS ::after bubble — no JavaScript, so
+   it works regardless of script load order.
+   -------------------------------------------------------------------------- */
+
+/* Pill-shaped superscript marker that lights up on hover (matches the CYP post). */
+.cite-tip {
+  font-size: 0.65em;
+  vertical-align: super;
+  line-height: 1;
+  font-weight: 600;
+  color: #1e3a8a;
+  background: #dbeafe;
+  text-decoration: none;
+  padding: 1px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+.cite-tip:hover {
+  text-decoration: none;
+  color: #1e3a8a;
+  background: #bfdbfe;
+}
+
+.cite-tip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  /* rem (not em) so the tooltip text is readable, not scaled by the small
+     superscript font-size of the marker. */
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.4;
+  color: #333;
+  white-space: normal;
+  width: max-content;
+  max-width: 350px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Reading-progress header (WSJ-style)
+   A sticky bar that slides in after the reader scrolls past the hero, showing
+   the OpenADMET logo, a short title, and a progress fill tracking scroll depth.
+   Markup is injected via include-before-body; behavior via include-after-body.
+   -------------------------------------------------------------------------- */
+
+.progress-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1100;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.progress-header.visible {
+  transform: translateY(0);
+}
+
+.progress-header-logo {
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.progress-header-title {
+  font-size: 0.82em;
+  font-weight: 600;
+  color: #333;
+  margin-left: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reading-progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #e8e8e8;
+}
+
+.reading-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #1d4ed8;
+  transition: width 0.15s linear;
+}
+
+/* --------------------------------------------------------------------------
+   4. YouTube embed
+   Responsive 16:9 wrapper so the inline player scales with the column width.
+   -------------------------------------------------------------------------- */
+
+.video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1em;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}

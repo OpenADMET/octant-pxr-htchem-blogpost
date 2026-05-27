@@ -10,9 +10,73 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - cosmo
+      - styles.css
     toc: true
     toc-depth: 3
     toc-title: "Contents"
     embed-resources: false
     title-block-banner: true
+    lightbox: true
+    include-before-body:
+      - text: |
+          <div class="progress-header">
+            <a href="https://openadmet.ghost.io/"><img src="figures/assets/openadmet-logo.png" alt="OpenADMET" class="progress-header-logo"></a>
+            <span class="progress-header-title">Navigating PXR Chemical Space</span>
+            <div class="reading-progress-track"><div class="reading-progress-fill"></div></div>
+          </div>
+    include-after-body:
+      - text: |
+          <script>
+            // Copy each figure caption into the preceding image's lightbox
+            // description so the caption is retained when a figure is maximized.
+            document.querySelectorAll('.figure-caption').forEach(function(cap) {
+              var prev = cap.previousElementSibling;
+              if (!prev) return;
+              var link = prev.querySelector('a.lightbox');
+              if (!link) return;
+              link.setAttribute('data-description', cap.innerHTML);
+            });
+
+            // Reading-progress header: slide in after scrolling past the hero,
+            // and update the progress fill to track scroll depth.
+            (function() {
+              var header = document.querySelector('.progress-header');
+              var fill = document.querySelector('.reading-progress-fill');
+              if (!header || !fill) return;
+              var threshold = 300; // px scrolled before the header appears
+              window.addEventListener('scroll', function() {
+                var scrollTop = window.scrollY;
+                var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                var pct = docHeight > 0 ? Math.min(scrollTop / docHeight * 100, 100) : 0;
+                fill.style.width = pct + '%';
+                header.classList.toggle('visible', scrollTop > threshold);
+              });
+            })();
+
+            // Size each interactive-figure iframe to its content height so the
+            // Plotly figures show in full with no inner scrollbar. The iframes
+            // are scaled to 0.75 via CSS, so the (overflow:hidden) wrapper is
+            // set to 0.75x the measured height to match.
+            (function() {
+              var SCALE = 0.75;
+              function fit(frame) {
+                try {
+                  var h = frame.contentDocument.documentElement.scrollHeight;
+                  if (!h) return;
+                  frame.style.height = h + 'px';
+                  if (frame.parentElement) {
+                    frame.parentElement.style.height = Math.round(h * SCALE) + 'px';
+                  }
+                } catch (e) { /* cross-origin or not ready; ignore */ }
+              }
+              document.querySelectorAll('iframe[src*="interactive"]').forEach(function(frame) {
+                frame.addEventListener('load', function() { fit(frame); });
+                if (frame.contentDocument &&
+                    frame.contentDocument.readyState === 'complete') {
+                  fit(frame);
+                }
+              });
+            })();
+          </script>
