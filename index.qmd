@@ -94,7 +94,7 @@ To deploy CAD in production, we integrated a Thermo Scientific Corona Veo RS ins
 ![](<figures/static/Figure 3 - UHPLC-CAD-MS setup.png>){width=100%}
 
 ::: {.figure-caption}
-**Figure 3:** The UHPLC-CAD-MS setup at Octant is shown above. The CAD quantifies abundance, while the MS is responsible for CAD peak identification. Chromatographic separation is carried out with a 50 mm Waters ACQUITY HSS C18 column over a 4-minute method. Comprehensive method details can be found in the blog post's GitHub repository.
+**Figure 3:** The UHPLC-CAD-MS setup at Octant is shown above. The CAD quantifies abundance, while the MS is responsible for CAD peak identification. Chromatographic separation is carried out with a 50 mm Waters ACQUITY HSS C18 column over a 4-minute method. Comprehensive method details can be found in the [blog post's GitHub repository](https://github.com/OpenADMET/octant-pxr-htchem-blogpost).
 :::
 
 Reaching the final CAD peak area-to-mass equation required developing a systematic method against a defined set of requirements. The method had to be (i) rapid enough to keep pace with HTChem synthesis throughput, (ii) reproducible across instrument runs, (iii) quantitative across structurally diverse analytes, (iv) accurate and specific enough to assign each chromatographic peak to a single chemical species, and (v) wide enough in dynamic range to quantify the range of yields encountered in HTChem. The first iteration of our method, run on a panel of analytical reference standards using common reverse-phase C18 chromatographic conditions, fell short on two fronts: individual calibration curves were nonlinear, and the response slope varied substantially from analyte to analyte.
@@ -246,12 +246,12 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 
 From these HTChem syntheses, broad observations can be made, such as the OCNT-0002416 core library being more potent on average than the OCNT-2432456 core library, but also having more failed syntheses (Fig. 9A). Among the compounds from these libraries identified as primary screen hits or chemisimilars, we advanced both groups in parallel to DRC collection and CAD quantification. In contrast to primary screen hits, chemisimilar compounds are not active in primary screens, possibly due to failed synthesis, insufficient product yield, or a true activity cliff. Using our yield quantification capabilities, we can identify compounds with insufficient yield that would otherwise have led to false-negative data. This consideration highlights the importance of integrating CAD with HTChem for model-training purposes, where low-yielding or failed syntheses could otherwise be misclassified as true biological inactivity.
 
-Together, the three HTChem libraries, including "semi-purified" crudes, expand the publicly-available PXR screening dataset and are intended to facilitate further exploration of PXR SAR across related scaffolds. All raw data for the libraries and experiments described in this post—including CAD peak areas, CAD-derived yields, pEC50 values, and yield-corrected pEC50 calculations with error estimates and confidence intervals—are available in the accompanying GitHub repository.
+Together, the three HTChem libraries, including "semi-purified" crudes, expand the publicly-available PXR screening dataset and are intended to facilitate further exploration of PXR SAR across related scaffolds. All raw data for the libraries and experiments described in this post—including CAD peak areas, CAD-derived yields, pEC50 values, and yield-corrected pEC50 calculations with error estimates and confidence intervals—are available in the [accompanying GitHub repository](https://github.com/OpenADMET/octant-pxr-htchem-blogpost).
 
 ::: {.callout-note}
 ## Accessing the Data on HuggingFace
 
-The crude HTChem library data released with this post is also available on HuggingFace at [`openadmet/pxr-challenge-train-test`](https://huggingface.co/datasets/openadmet/pxr-challenge-train-test). It can be loaded with the [`datasets`](https://huggingface.co/docs/datasets) library:
+The crude and semi-pure HTChem library data released with this post are also available on HuggingFace at [`openadmet/pxr-challenge-train-test`](https://huggingface.co/datasets/openadmet/pxr-challenge-train-test). They can be loaded with the [`datasets`](https://huggingface.co/docs/datasets) library:
 
 ```python
 from datasets import load_dataset
@@ -259,9 +259,13 @@ from datasets import load_dataset
 # Crude HTChem libraries (454 novel EC50s)
 ds_crudes = load_dataset("openadmet/pxr-challenge-train-test", "crudes_htchem")
 train_crudes = ds_crudes["train"]
+
+# Semi-pure HTChem library (96-compound microscale synthesis)
+ds_semi_pure = load_dataset("openadmet/pxr-challenge-train-test", "semi_pure_htchem")
+train_semi_pure = ds_semi_pure["train"]
 ```
 
-Key columns include `SMILES`, `OCNT_ID`, `Corrected Crude pEC50 (log)`, `Corrected Crude pEC50 ±95% CI (log)`, `Crude Product Yield (%)`, and `Crude Peak Area (pA*min)`.
+For the crude libraries, key columns include `SMILES`, `OCNT_ID`, `Corrected Crude pEC50 (log)`, `Corrected Crude pEC50 ±95% CI (log)`, `Crude Product Yield (%)`, and `Crude Peak Area (pA*min)`. The semi-pure dataset shares the same schema, with yield and pEC50 values reflecting the semi-purified sample format.
 :::
 
 ## 7) Conclusion
