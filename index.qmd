@@ -87,7 +87,7 @@ At Octant, we have developed a UHPLC-CAD-MS method that enables standard-free ab
 
 $$\text{Eq. 3} \qquad \text{Mass (ng)} = 12.5 \times \text{CAD peak area (pA·min)}$$
 
-The 12.5 ng/(pA·min) conversion constant applies to any analyte without prior knowledge of its structure or response factor. Across a calibration set of 300+ structurally-diverse compounds, the inter-analyte coefficient of variation was 26.79% at a standard injection mass of 250 ng and 31.74% with respect to overall slope. The lower limit of quantification (LLOQ) is 1.0 pA·min, which was derived from a 10:1 signal-to-noise ratio (a standard analytical chemistry benchmark) <a href="https://doi.org/10.1016/j.jpba.2023.115357" class="cite-tip" data-tooltip="Huang, Y.; Lu, H.; Li, Z. et al. (2023). Development of HPLC-CAD method for simultaneous quantification of nine related substances in ursodeoxycholic acid. Journal of Pharmaceutical and Biomedical Analysis." target="_blank">10</a>. These quantities allow us to quantify uncertainty in the yield estimate, which can then be propagated together with the error from the DRC fit to determine the uncertainty in the final corrected EC50.
+The 12.5 ng/(pA·min) conversion constant applies to any analyte without prior knowledge of its structure or response factor. Across a calibration set of 300+ structurally-diverse compounds, the inter-analyte coefficient of variation was 26.79% at a standard injection mass of 250 ng and 31.74% with respect to overall slope. The lower limit of quantification (LLOQ) is 1.0 pA·min, which was derived from a 10:1 signal-to-noise ratio (a standard analytical chemistry benchmark) <a href="https://www.fda.gov/media/161201/download" class="cite-tip" data-tooltip="U.S. Food and Drug Administration. (2024). Q2(R2) Validation of Analytical Procedures Guidance for Industry. U.S. Department of Health and Human Services." target="_blank">10</a>. These quantities allow us to quantify uncertainty in the yield estimate, which can then be propagated together with the error from the DRC fit to determine the uncertainty in the final corrected EC50.
 
 To deploy CAD in production, we integrated a Thermo Scientific Corona Veo RS instrument into a UHPLC-CAD-MS configuration in which post-column flow is split between the CAD and a Thermo TSQ Quantis triple quadrupole mass spectrometer (Fig. 3). The CAD provides the quantitative readout, and the MS handles peak identification through alignment of retention times with CAD-detected species. This division of labor is fundamental to the method: the CAD tells us "how much," and the MS tells us "what." An inverse gradient arising from a second pump—shown at the bottom of the LC stack in Figure 3—mixes with the effluent post-column to maintain constant total organic composition entering the CAD, mitigating response variability that results from the CAD's intrinsic sensitivity to mobile phase composition <a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-73449-cad-inverse-gradient-tn73449-en.pdf" class="cite-tip" data-tooltip="Grosse, S.; Muellner, T.; Lovejoy, K. et al. (2020). Why use charged aerosol detection with inverse gradient? Thermo Fisher Scientific Technical Note 73449." target="_blank">11</a>, <a href="https://doi.org/10.1016/j.chroma.2015.05.050" class="cite-tip" data-tooltip="Russell, J. J.; Heaton, J. C.; Underwood, T. et al. (2015). Performance of charged aerosol detection with hydrophilic interaction chromatography. Journal of Chromatography A." target="_blank">12</a>.
 
@@ -166,7 +166,7 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 :::
 
 ::: {.figure-caption}
-**Figure 9A:** Beeswarm overview of both HTChem libraries and the 96-compound semi-pure library, colour-coded by CAD-derived synthesis yield.
+**Figure 9A:** Beeswarm plot presentation of the HTChem libraries, including the 96-compound microscale synthesis, color-coded by CAD-derived synthesis yield.
 :::
 
 ::: {.column-page}
@@ -181,7 +181,7 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 :::
 
 ::: {.figure-caption}
-**Figure 9B:** OCNT-2432456 library — uncorrected vs. corrected pEC50, colour-coded by chemical similarity to the reference hit.
+**Figure 9B:** OCNT-2432456 library — uncorrected vs. corrected pEC50, color-coded by chemical similarity to the reference hit.
 :::
 
 ::: {.column-page}
@@ -196,7 +196,7 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 :::
 
 ::: {.figure-caption}
-**Figure 9C:** OCNT-0002416 library — uncorrected vs. corrected pEC50, colour-coded by chemical similarity to the reference hit.
+**Figure 9C:** OCNT-0002416 library — uncorrected vs. corrected pEC50, color-coded by chemical similarity to the reference hit.
 :::
 
 ::: {.column-page}
@@ -211,7 +211,7 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 :::
 
 ::: {.figure-caption}
-**Figure 9D:** pEC50 movement following yield-based correction for the 30 most potent hits from the OCNT-2432456 library, colour-coded by chemical similarity to the reference hit.
+**Figure 9D:** pEC50 movement following yield-based correction for the 30 most potent hits from the OCNT-2432456 library, color-coded by chemical similarity to the reference hit.
 :::
 
 ::: {.column-page}
@@ -226,7 +226,7 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 :::
 
 ::: {.figure-caption}
-**Figure 9E:** pEC50 movement following yield-based correction for the 30 most potent hits from the OCNT-0002416 library, colour-coded by chemical similarity to the reference hit.
+**Figure 9E:** pEC50 movement following yield-based correction for the 30 most potent hits from the OCNT-0002416 library, color-coded by chemical similarity to the reference hit.
 :::
 
 ::: {.column-page}
@@ -241,12 +241,12 @@ From these HTChem SAR insights, the ability to characterize crude reaction yield
 :::
 
 ::: {.figure-caption}
-**Figure 9:** Two known PXR agonists were used to design carboxylic acid HTChem cores, which underwent amide coupling with a library of amine-bearing fragment molecules. A beeswarm plot of the two HTChem libraries and the 96-compound "semi-pure" HTChem synthesis is presented, with compounds color-coded based on CAD-derived synthesis yield (**A**). The two HTChem libraries are plotted with respect to their uncorrected (x-axis) and corrected (y-axis) pEC50 values, with color coding based on chemical similarity to the reference hit from which the core was derived (**B, C**). The pEC50 movement following yield-based correction for the 30 most potent hits from the two PXR HTChem libraries is shown, with color coding based on chemical similarity to the reference hit (**D, E**).
+**Figure 9:** Two known PXR agonists were used to design carboxylic acid HTChem cores, which underwent amide coupling with a library of amine-bearing fragment molecules. Beeswarm plots of the HTChem libraries, including the 96-compound “semi-pure” microscale synthesis, is presented, with compounds color-coded based on CAD-derived synthesis yield (**A**). The two carboxylic acid-core HTChem libraries are plotted with respect to their uncorrected (x-axis) and corrected (y-axis) pEC50 values, with color coding based on chemical similarity to the reference hit from which the core was derived (**B, C**). The pEC50 movement following yield-based correction for the 30 most potent hits from the two carboxylic acid-core HTChem libraries is shown, with color coding based on chemical similarity to the reference hit (**D, E**).
 :::
 
 From these HTChem syntheses, broad observations can be made, such as the OCNT-0002416 core library being more potent on average than the OCNT-2432456 core library, but also having more failed syntheses (Fig. 9A). Among the compounds from these libraries identified as primary screen hits or chemisimilars, we advanced both groups in parallel to DRC collection and CAD quantification. In contrast to primary screen hits, chemisimilar compounds are not active in primary screens, possibly due to failed synthesis, insufficient product yield, or a true activity cliff. Using our yield quantification capabilities, we can identify compounds with insufficient yield that would otherwise have led to false-negative data. This consideration highlights the importance of integrating CAD with HTChem for model-training purposes, where low-yielding or failed syntheses could otherwise be misclassified as true biological inactivity.
 
-Together, the three HTChem libraries, including "semi-purified" crudes, expand the publicly-available PXR screening dataset and are intended to facilitate further exploration of PXR SAR across related scaffolds. All raw data for the libraries and experiments described in this post—including CAD peak areas, CAD-derived yields, pEC50 values, and yield-corrected pEC50 calculations with error estimates and confidence intervals—are available in the [accompanying GitHub repository](https://github.com/OpenADMET/octant-pxr-htchem-blogpost).
+Together, the three HTChem libraries, including the 96 “semi-purified” crudes, expand the publicly-available PXR screening dataset and are intended to facilitate further exploration of PXR SAR across related scaffolds. All raw data for the libraries and experiments described in this post—including CAD peak areas, CAD-derived yields, pEC50 values, and yield-corrected pEC50 calculations with error estimates and confidence intervals—are available in the [accompanying GitHub repository](https://github.com/OpenADMET/octant-pxr-htchem-blogpost).
 
 ::: {.callout-note}
 ## Accessing the Data on HuggingFace
@@ -278,6 +278,6 @@ Applied to PXR, this workflow generated new open datasets spanning crude, semi-p
 
 ## 8) Acknowledgments
 
-The authors would like to acknowledge experimental data, analysis, and scientific input contributed by Ayesha Ghazali, Bryan Jiang, Galen Correy, Hugo MacDermott-Opeskin, Junyu Deng, Marco Falcioni, Naomi Handly, Patrick Walters, Robert Warneford-Thomson, Sam Sabaat, Scott Simpkins, and Theodore Tarver.
+The authors would like to acknowledge experimental data, analysis, and scientific input contributed by Ayesha Ghazali, Bryan Jiang, Galen Correy, Hugo MacDermott-Opeskin, Junyu Deng, Marco Falcioni, Naomi Handly, Nathaniel Luis, Patrick Walters, Robert Warneford-Thomson, Sam Sabaat, Scott Simpkins, Steven Edgar, and Theodore Tarver.
 
 This work was supported by funding from ARPA-H and the Astera Foundation.
