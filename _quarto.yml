@@ -29,14 +29,15 @@ format:
     include-after-body:
       - text: |
           <script>
-            // Copy each figure caption into the preceding image's lightbox
-            // description so the caption is retained when a figure is maximized.
+            // Copy each figure caption into every preceding lightbox link's
+            // description so the caption is retained when a figure is maximized
+            // (works for both single- and multi-image figure blocks).
             document.querySelectorAll('.figure-caption').forEach(function(cap) {
               var prev = cap.previousElementSibling;
               if (!prev) return;
-              var link = prev.querySelector('a.lightbox');
-              if (!link) return;
-              link.setAttribute('data-description', cap.innerHTML);
+              prev.querySelectorAll('a.lightbox').forEach(function(link) {
+                link.setAttribute('data-description', cap.innerHTML);
+              });
             });
 
             // Reading-progress header: slide in after scrolling past the hero,
