@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Calvin Hawe">
+<meta name="author" content="Ana Lindahl">
+<meta name="author" content="Terry Lou">
+<meta name="dcterms.date" content="2026-05-28">
+
+<title>Navigating PXR Chemical Space with High-Throughput Chemistry and Standard-Free Quantification – Navigating PXR Chemical Space with HTChem and Standard-Free Quantification</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-2958852ac996161049e8693a9693f93e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Navigating PXR Chemical Space with High-Throughput Chemistry and Standard-Free Quantification</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Authors</div>
+      <div class="quarto-title-meta-contents">
+               <p>Calvin Hawe </p>
+               <p>Ana Lindahl </p>
+               <p>Terry Lou </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 28, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">1) Introduction</a></li>
+  <li><a href="#generating-data-for-openadmet" id="toc-generating-data-for-openadmet" class="nav-link" data-scroll-target="#generating-data-for-openadmet">2) Generating Data for OpenADMET</a></li>
+  <li><a href="#development-of-a-uhplc-cad-ms-method-for-the-characterization-and-quantification-of-crude-high-throughput-chemical-reaction-mixtures" id="toc-development-of-a-uhplc-cad-ms-method-for-the-characterization-and-quantification-of-crude-high-throughput-chemical-reaction-mixtures" class="nav-link" data-scroll-target="#development-of-a-uhplc-cad-ms-method-for-the-characterization-and-quantification-of-crude-high-throughput-chemical-reaction-mixtures">3) Development of a UHPLC-CAD-MS Method for the Characterization and Quantification of Crude, High-Throughput Chemical Reaction Mixtures</a></li>
+  <li><a href="#propagation-of-standard-error-for-corrected-pec50" id="toc-propagation-of-standard-error-for-corrected-pec50" class="nav-link" data-scroll-target="#propagation-of-standard-error-for-corrected-pec50">4) Propagation of Standard Error for Corrected pEC50</a></li>
+  <li><a href="#validation-of-yield-based-ec50-correction" id="toc-validation-of-yield-based-ec50-correction" class="nav-link" data-scroll-target="#validation-of-yield-based-ec50-correction">5) Validation of Yield-Based EC50 Correction</a></li>
+  <li><a href="#htchem-with-cad-ms-to-explore-pxr-sar" id="toc-htchem-with-cad-ms-to-explore-pxr-sar" class="nav-link" data-scroll-target="#htchem-with-cad-ms-to-explore-pxr-sar">6) HTChem with CAD-MS to Explore PXR SAR</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">7) Conclusion</a></li>
+  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">8) Acknowledgments</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<div class="progress-header">
+  <a href="https://openadmet.ghost.io/"><img src="figures/assets/openadmet-logo.png" alt="OpenADMET" class="progress-header-logo"></a>
+  <span class="progress-header-title">Navigating PXR Chemical Space</span>
+  <div class="reading-progress-track"><div class="reading-progress-fill"></div></div>
+</div>
+
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1) Introduction</h2>
+<p>At <a href="https://openadmet.org/" target="_blank">OpenADMET</a>, we have the mission to make therapeutic development more reliable, affordable, and effective by building open models and datasets for ADMET properties. To deliver on this goal, we are chemically mapping the “Avoidome,” consisting of the enzymes, transporters, and receptors treated as “antitargets” in medicinal chemistry and pharmacology <a href="https://doi.org/10.1016/j.cell.2024.01.003" class="cite-tip" data-tooltip="Fraser, J. S.; Murcko, M. A. (2024). Structure is beauty, but not always truth. Cell." target="_blank">1</a>. By uncovering and elucidating the molecular structures that drive activity against antitargets, the next generation of safe and effective medicines will be developed at a fraction of the traditional time and cost.</p>
+<p>However, chemical space is vast. Common estimates place the number of possible distinct small organic molecules at around 10^60 <a href="https://doi.org/10.1038/432823a" class="cite-tip" data-tooltip="Kirkpatrick, P.; Ellis, C. (2004). Chemical space. Nature." target="_blank">2</a>. For context, there are approximately 10^80 nucleons in the observable universe <a href="https://www.aanda.org/articles/aa/full_html/2020/09/aa33910-18/aa33910-18.html" class="cite-tip" data-tooltip="Planck Collaboration; Aghanim, N. et al. (2020). Planck 2018 results. VI. Cosmological parameters. Astronomy &amp; Astrophysics." target="_blank">3</a>. Moreover, many antitargets—particularly PXR (pregnane X receptor)—are known to be promiscuous, binding to a wide range of xenobiotic small molecules to fulfill their role in sensing and regulating metabolism <a href="https://doi.org/10.1126/science.1060762" class="cite-tip" data-tooltip="Watkins, R. E.; Wisely, G. B.; Moore, L. B. et al. (2001). The Human Nuclear Xenobiotic Receptor PXR: Structural Determinants of Directed Promiscuity. Science." target="_blank">4</a>. In fact, PXR is so promiscuous that it is often jokingly referred to as the “promiscuous xenobiotic receptor” <a href="https://doi.org/10.1016/S0165-6147(00)01847-2" class="cite-tip" data-tooltip="Gillam, E. M. J. (2001). The PXR ligand-binding domain: how to be picky and promiscuous at the same time. Trends in Pharmacological Sciences." target="_blank">5</a>, <a href="https://doi.org/10.1210/mend.14.1.0409" class="cite-tip" data-tooltip="Jones, S. A.; Moore, L. B.; Shenk, J. L. et al. (2000). The Pregnane X Receptor: A Promiscuous Xenobiotic Receptor That Has Diverged during Evolution. Molecular Endocrinology." target="_blank">6</a>.</p>
+<p>In order to deeply understand the precise chemical moieties that drive a small molecule’s activity against an antitarget, developing an approach that allows access to broad swaths of chemical space and extends beyond commercially-available molecules and FDA-approved medicines is key. Screening conventional chemical decks can serve as an insightful medicinal chemistry starting point, but generating the data to subsequently map the structure-activity relationship (SAR) landscape surrounding a target—or in this case, an antitarget—necessitates the synthesis and testing of novel compounds and analogs at scale to comprehensively explore activity cliffs, selectivity, and potency-driving structural motifs.</p>
+<p>At <a href="https://www.octant.bio/" target="_blank">Octant</a>, we routinely synthesize and screen tens of thousands of molecules on a weekly basis for our drug programs using direct-to-biology (D2B) approaches. D2B enables greater speed, lower cost, and broader coverage of chemical space by assaying reaction mixtures directly without purification. At Octant, this concept is put into practice through the integration of high-throughput chemistry (HTChem) with high-throughput screening (HTS), where nanoscale chemical synthesis enables the generation of large compound libraries that can be screened at scale.</p>
+<p>Fundamental to a D2B workflow is the screening of crude reaction mixtures <a href="https://doi.org/10.1039/D1SC03551G" class="cite-tip" data-tooltip="Thomas, R. P.; Heap, R. E.; Zappacosta, F. et al. (2021). A direct-to-biology high-throughput chemistry approach to reactive fragment screening. Chemical Science." target="_blank">7</a>. While efficient for discovery, screening crude mixtures poses a challenge when using D2B data for machine-learning model training. This is due to the confounding characteristics of crude reaction mixtures, including unidentified side-product formation, potentially biologically active reagents and byproducts, and, notably, variable synthesis yields of the intended product that obscure its true concentration and assay readout. In drug discovery, these challenges can be addressed by larger-quantity resynthesis and purification of select compounds to confirm potency and on-target binding. However, this approach does not easily scale to the size and breadth needed for machine-learning datasets, where training useful regression models generally requires large numbers of quantitative data points. At Octant, we have found that by pairing the appropriate analytical infrastructure with cell-based D2B screening, reliable high-throughput potency data for newly-synthesized compounds can be obtained.</p>
+<p>In this post, we will describe the development of a method for yield-based potency correction via charged aerosol detection (CAD) to harness the scale of a high-throughput D2B platform while generating data that reflects the fidelity of pure compound screening.</p>
+</section>
+<section id="generating-data-for-openadmet" class="level2">
+<h2 class="anchored" data-anchor-id="generating-data-for-openadmet">2) Generating Data for OpenADMET</h2>
+<p>OpenADMET’s <a href="https://openadmet.ghost.io/predicting-pxr-induction-we-have-liftoff/" target="_blank">PXR induction challenge</a> is currently underway! For this challenge, Octant developed an in-house PXR agonism, cell-based reporter assay from which a dose-response curve (DRC) and potency metric—EC50 (half-maximal effective concentration)—can be determined for small molecules. The need to map PXR’s small-molecule activation landscape is underscored by the fact that reliable, publicly-available EC50 data remain notably sparse relative to PXR’s significance in drug discovery. Specifically, there are only ≈800 high-quality PXR EC50 data points available in ChEMBL (for 657 unique compounds), which were compiled from 148 different papers in which assay conditions were not standardized. In OpenADMET’s first step to extensively explore the activator landscape for PXR, over 11,000 diverse commercially-available compounds and FDA-approved medicines were screened with our PXR assay (Fig. 1A). To explore PXR chemical space further and iterate on the findings from this dataset, HTChem can be employed to build novel chemical libraries by decoupling chemical bonds—such as an amide—in PXR-active scaffolds (Fig. 1B). As will be described in greater detail in Section 6, Octant pursued this strategy by synthesizing and screening a total of 3,181 molecules, including 3,168 compounds synthesized using high-throughput approaches and additional singleton compounds for method validation. From this work, 565 unique compounds were screened with 9-point DRCs, and 454 novel EC50s were generated (and released with this blog post) from molecules that passed both synthesis and screening QC. Over half of these compounds had pEC50 values greater than 5, and the average and median pEC50 were 4.9 and 5.2, respectively.</p>
+<p><a href="figures/static/Figure 1 - PXR Dataset Size + HTChem Schematic.png" class="lightbox" data-gallery="blog-figures"><img src="figures/static/Figure 1 - PXR Dataset Size + HTChem Schematic.png" class="img-fluid" style="width:100.0%"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong><br>
+<strong>A.</strong> As of May 2026, there are 657 small molecules with PXR activity data in the ChEMBL database. This number is contrasted with the number of compounds that OpenADMET has screened against PXR.<br>
+<strong>B.</strong> A method to design a “core” for HTChem is to disconnect a chemical bond from a known active compound. Then, a novel library of analogs to the reference molecule is synthesized by reacting an amenable fragment set with the core molecule.</p>
+</div>
+<p>HTChem library size can be scaled up (to over 10k analogs from a single core) or refined for a more targeted approach to exploring SAR. However, regardless of library size, HTChem reaction yields can vary significantly from compound to compound, even after pre-synthesis optimization of reaction conditions. Thus, in order to more confidently assign a potency value to an HTChem molecule, incorporation of reaction yield into the calculation of the EC50 is crucial so that potency is determined from the actual concentration of the active species. This process of EC50 “correction” is done by retroactively adjusting the crude, uncorrected EC50 in a manner proportional to the reaction yield (Eq. 1). Equivalently, the correction can be understood as adjusting the nominal concentration of a reaction initially assumed to have had 100% yield by a factor corresponding to the observed yield (Eq. 2). Conceptually, this can be visualized by adjusting the x-axis of a dose-response curve based upon the true concentration of the HTChem molecule. This process of EC50 correction, and the subsequent movement of a data point when comparing a crude HTChem compound’s pEC50 to its pure-version pEC50, is animated below (Fig. 2).</p>
+<p><span class="math display">\[\text{Eq. 1} \qquad \text{Corrected EC}_{50}\text{ (M)} = \text{Crude EC}_{50}\text{ (M)} \times \text{Yield (\%)}\]</span></p>
+<p><span class="math display">\[\text{Eq. 2} \qquad \text{True Concentration (M)} = \text{Nominal Crude Concentration (M)} \times \text{Yield (\%)}\]</span></p>
+<p><a href="figures/static/Figure 2 - Yield Correction.gif" class="lightbox" data-gallery="blog-figures"><img src="figures/static/Figure 2 - Yield Correction.gif" class="img-fluid" style="width:100.0%"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 2:</strong> The process of EC50 correction, along with HTChem-to-pure comparisons, is shown with two example compounds: OCNT-2315950 and OCNT-2309356.</p>
+<ul>
+<li><strong>Scene 1:</strong> Dose-response curves and CAD-based yields were collected for the crude HTChem compounds.</li>
+<li><strong>Scene 2:</strong> The DRC is shifted proportionally to the yields of the crude HTChem reactions.</li>
+<li><strong>Scene 3:</strong> Pure versions of the same HTChem compounds were screened in duplicate, and EC50s derived from the DRCs were averaged.</li>
+<li><strong>Scene 4:</strong> A plot comparing crude pEC50 (y-axis) and pure pEC50 (x-axis) first depicts the original correlation without yield-based correction, and then—through an arrow animation—shows the movement of the data point on the plot following EC50 correction.</li>
+</ul>
+</div>
+<p>To explore PXR chemical space with HTChem, we selected two of our most potent PXR activators and treated them as two distinct chemical series, much as a medicinal chemist would for a traditional target. The two selected reference compounds showed a preliminary sign of SAR with chemically-similar analogs in the 11k screening deck. By disconnecting their amide bonds, we designed two carboxylic acid HTChem cores to react with a diversity-downselected set of 1,536 fragments bearing a complementary amine functional group. Through this “core-and-fragment” approach, we synthesized two HTChem libraries derived from known PXR-inducing compounds, allowing us to systematically examine how local structural changes influence PXR activation. Additionally, because the reference compounds have been co-crystallized with PXR by the OpenADMET team at UCSF, the binding pocket and fragment-facing orientation of novel hits identified from these HTChem libraries can be analyzed and inferred (Video 1).</p>
+<p><strong>Video 1:</strong> Exploring PXR Chemical Space</p>
+<div class="video-embed">
+  <iframe src="https://www.youtube-nocookie.com/embed/dD8dMO19SO4" title="Exploring PXR Chemical Space" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+</div>
+<p>However, the screening of crude D2B libraries poses two intrinsic questions:</p>
+<ol type="1">
+<li><p>Was the intended molecule synthesized? And if so, what was the compound’s yield (and thus true concentration) that determined an EC50 value?</p></li>
+<li><p>Was activity in an assay driven by the desired product, or by any impurities or side products?</p></li>
+</ol>
+<p>Without answers to these questions, one may argue that the data generated from D2B are not quantitative enough for model training. To close this gap, we undertook a combination of analytical and benchtop chemistry method development.</p>
+</section>
+<section id="development-of-a-uhplc-cad-ms-method-for-the-characterization-and-quantification-of-crude-high-throughput-chemical-reaction-mixtures" class="level2">
+<h2 class="anchored" data-anchor-id="development-of-a-uhplc-cad-ms-method-for-the-characterization-and-quantification-of-crude-high-throughput-chemical-reaction-mixtures">3) Development of a UHPLC-CAD-MS Method for the Characterization and Quantification of Crude, High-Throughput Chemical Reaction Mixtures</h2>
+<p>To support meaningful pEC50 interpretation from crude D2B screens, where apparent potency depends directly on true product concentration, we needed an analytical readout that is both molecule-agnostic and capable of converting chromatographic signal directly into product mass. Within the pharmaceutical industry, CAD has been employed for precisely this purpose <a href="https://doi.org/10.1021/acsmedchemlett.2c00441" class="cite-tip" data-tooltip="Roecker, A. J.; Schirripa, K. M.; Loughran, H. M. et al. (2023). Pyrazole Ureas as Low Dose, CNS Penetrant Glucosylceramide Synthase Inhibitors for the Treatment of Parkinson's Disease. ACS Medicinal Chemistry Letters." target="_blank">8</a>, eliminating the need to purchase or synthesize analytical reference standards for every novel compound produced (an approach that would not scale with HTChem). CAD delivers “near-universal detection” <a href="https://www.thermofisher.com/blog/analyteguru/five-reasons-to-use-charged-aerosol-detection-cad/" class="cite-tip" data-tooltip="Cross, T. (2018). 5 Reasons to Use Charged Aerosol Detection (CAD). Thermo Fisher Scientific Analyte Guru blog." target="_blank">9</a> by evaporating the chromatographic mobile phase and leaving behind non-volatile particles, which are then charged and quantified by measuring the resulting current. The signal scales with particle mass largely independent of analyte structure, producing peak areas that reflect molecule abundance far more closely than other analytical techniques such as mass spectrometry, where signal intensity is strongly influenced by ionization efficiency. Prior to the CAD integration, Octant’s analytical workflow had been LC-MS-based, which was well-matched to HTChem synthesis throughput, but unable to deliver standard-free quantitative measurement of reaction outcomes.</p>
+<p>At Octant, we have developed a UHPLC-CAD-MS method that enables standard-free absolute quantification of crude reaction mixtures from the HTChem platform, allowing us to characterize reaction yields and subsequently correct EC50s. The method reduces to a single universal calibration relationship between on-column mass (in nanograms) and CAD peak area (in picoampere-minutes).</p>
+<p><span class="math display">\[\text{Eq. 3} \qquad \text{Mass (ng)} = 12.5 \times \text{CAD peak area (pA·min)}\]</span></p>
+<p>The 12.5 ng/(pA·min) conversion constant applies to any analyte without prior knowledge of its structure or response factor. Across a calibration set of 300+ structurally-diverse compounds, the inter-analyte coefficient of variation was 26.79% at a standard injection mass of 250 ng and 31.74% with respect to overall slope. The lower limit of quantification (LLOQ) is 1.0 pA·min, which was derived from a 10:1 signal-to-noise ratio (a standard analytical chemistry benchmark) <a href="https://www.fda.gov/media/161201/download" class="cite-tip" data-tooltip="U.S. Food and Drug Administration. (2024). Q2(R2) Validation of Analytical Procedures Guidance for Industry. U.S. Department of Health and Human Services." target="_blank">10</a>. These quantities allow us to quantify uncertainty in the yield estimate, which can then be propagated together with the error from the DRC fit to determine the uncertainty in the final corrected EC50.</p>
+<p>To deploy CAD in production, we integrated a Thermo Scientific Corona Veo RS instrument into a UHPLC-CAD-MS configuration in which post-column flow is split between the CAD and a Thermo TSQ Quantis triple quadrupole mass spectrometer (Fig. 3). The CAD provides the quantitative readout, and the MS handles peak identification through alignment of retention times with CAD-detected species. This division of labor is fundamental to the method: the CAD tells us “how much,” and the MS tells us “what.” An inverse gradient arising from a second pump—shown at the bottom of the LC stack in Figure 3—mixes with the effluent post-column to maintain constant total organic composition entering the CAD, mitigating response variability that results from the CAD’s intrinsic sensitivity to mobile phase composition <a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-73449-cad-inverse-gradient-tn73449-en.pdf" class="cite-tip" data-tooltip="Grosse, S.; Muellner, T.; Lovejoy, K. et al. (2020). Why use charged aerosol detection with inverse gradient? Thermo Fisher Scientific Technical Note 73449." target="_blank">11</a>, <a href="https://doi.org/10.1016/j.chroma.2015.05.050" class="cite-tip" data-tooltip="Russell, J. J.; Heaton, J. C.; Underwood, T. et al. (2015). Performance of charged aerosol detection with hydrophilic interaction chromatography. Journal of Chromatography A." target="_blank">12</a>.</p>
+<p><a href="figures/static/Figure 3 - UHPLC-CAD-MS setup.png" class="lightbox" data-gallery="blog-figures"><img src="figures/static/Figure 3 - UHPLC-CAD-MS setup.png" class="img-fluid" style="width:100.0%"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 3:</strong> The UHPLC-CAD-MS setup at Octant is shown above. The CAD quantifies abundance, while the MS is responsible for CAD peak identification. Chromatographic separation is carried out with a 50 mm Waters ACQUITY HSS C18 column over a 4-minute method. Comprehensive method details can be found in the <a href="https://github.com/OpenADMET/octant-pxr-htchem-blogpost" target="_blank">blog post’s GitHub repository</a>.</p>
+</div>
+<p>Reaching the final CAD peak area-to-mass equation required developing a systematic method against a defined set of requirements. The method had to be (i) rapid enough to keep pace with HTChem synthesis throughput, (ii) reproducible across instrument runs, (iii) quantitative across structurally diverse analytes, (iv) accurate and specific enough to assign each chromatographic peak to a single chemical species, and (v) wide enough in dynamic range to quantify the range of yields encountered in HTChem. The first iteration of our method, run on a panel of analytical reference standards using common reverse-phase C18 chromatographic conditions, fell short on two fronts: individual calibration curves were nonlinear, and the response slope varied substantially from analyte to analyte.</p>
+<p>The final diluent and mobile phase compositions selected for the method addressed the linearity issue and deviate from a typical reversed-phase C18 LC-MS configuration. Specifically, to mitigate the nonlinearity attributed to analyte solubility, MeOH is included in both the diluent and mobile phase at 20% v/v. At higher injection masses, the standard reverse-phase conditions could not keep lipophilic drug-like analytes fully solubilized at the moment of injection, compressing the dynamic range. A co-solvent of 20% MeOH restored linearity across our dynamic range of interest to adequately capture yield across the HTChem platform.</p>
+<p>Apart from solvent effects (which were already addressed by the inverse gradient), the most reported and verified driver of variable CAD response is salt formation <a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-72806-uhplc-charged-aerosol-detection-tn72806-en.pdf" class="cite-tip" data-tooltip="Menz, M.; Eggart, B.; Lovejoy, K. et al. (2018). Charged aerosol detection - factors affecting uniform analyte response. Thermo Fisher Scientific Technical Note 72806." target="_blank">13</a>. When an analyte forms a salt with a mobile phase additive, the total mass of the CAD particle is the analyte plus its associated counterion. Our original mobile phase used formic acid, and our drug-like chemical matter contained variable numbers of basic nitrogen atoms that would protonate and ionically bond to formate counterions. Quinidine is a representative example with its two basic nitrogens (a tertiary amine, pKa 8.6, and a quinoline nitrogen, pKa 4.2). By readily forming a doubly protonated diformate salt under 0.1% formic acid-containing LC conditions, quinidine’s effective mass at the CAD detector is increased by 1.28x (Fig. 4). This can be addressed via “salt-mass correction,” in which CAD peak areas are adjusted on a per-analyte basis using well-characterized pKa values. However, our broader objective is the high-throughput characterization of diverse, novel chemical matter, and salt-mass correction is only as good as the pKa estimate. Existing pKa prediction tools such as Chemaxon and RDKit routinely disagree with experimental values (particularly for novel scaffolds) by amounts that would undermine salt-mass correction accuracy. For a known compound library, salt-mass correction is reasonable, but for the kind of chemical space HTChem is built to explore, it is not tractable.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/static/Figure 4 - Quinidine Salt.png" class="lightbox" data-gallery="blog-figures"><img src="figures/static/Figure 4 - Quinidine Salt.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%"></a></p>
+</figure>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 4:</strong> Quinidine’s nitrogen atoms are protonated at 0.1% formic acid (v/v), leading to formate salt complexes that inflate CAD peak area and lead to inconsistencies in response.</p>
+</div>
+<p>Rather than correcting for it, the cleaner solution was to remove formic acid from the mobile phase. With no formic acid, no formate salts form, and no per-analyte correction is needed. Predictably, due to formic acid’s role in controlling the pH and minimizing undesirable interactions with the stationary phase, the immediate consequence was a degradation of chromatographic peak shape. Through targeted reoptimization of the LC method—specifically, a 1.8 µm Waters ACQUITY UPLC HSS C18, a shallow gradient segment where most compounds elute, and pre-column compartment heating to 60 °C—chromatographic quality was recovered, and the corresponding tightening of inter-analyte CAD response confirmed that the salt-formation pathway had been a meaningful contributor to response variability.</p>
+<p>To further improve linearity and reduce response variability, two parameters on the CAD itself were optimized: the power function value (PFV) and the CAD evaporator temperature (EvapT). A PFV of 1.15 produced the most robust linear response across diverse drug-like analytes and was implemented into the method. For the EvapT, it is known that higher temperatures decrease baseline noise by ensuring complete evaporation of mobile phase solvent microdroplets and semi-volatile trace impurities—improving signal-to-noise and lowering the achievable lower limit of quantification (LLOQ)—but push more intended analytes into the semi-volatile regime (where some fraction of the analyte mass evaporates with the mobile phase before reaching the detector) <a href="https://documents.thermofisher.com/TFS-Assets/CMD/Technical-Notes/tn-72806-uhplc-charged-aerosol-detection-tn72806-en.pdf" class="cite-tip" data-tooltip="Menz, M.; Eggart, B.; Lovejoy, K. et al. (2018). Charged aerosol detection - factors affecting uniform analyte response. Thermo Fisher Scientific Technical Note 72806." target="_blank">13</a>. By testing evaporator temperatures ranging from 20 °C to 95 °C against a reference panel consisting of molecules used in our ADMET assays, we identified 65 °C as the optimal compromise between noise reduction and preservation of non-volatile analyte behavior. However, some analytes of interest do behave as semi-volatile at 65 °C, but which molecules will behave this way cannot be confidently predicted in advance since volatility is governed by boiling point and enthalpy of vaporization, neither practical to measure nor reliably predicted. Molecular weight can serve as a general proxy for volatility, but in order to catch these cases of semi-volatility in a robust manner, we apply a routine QC step in which suspect analytes are reinjected with the EvapT lowered to its minimum (20 °C). A substantial increase in CAD peak area (beyond what would be expected from a noisier baseline) flags semi-volatile behavior, while a small change is consistent with non-volatile behavior. Although an EvapT of 20 °C produces a noisier baseline and therefore less precise yields, it provides more accurate yields than 65 °C for compounds that behave as semi-volatile at 65 °C. The cumulative effect of these systematic interventions—diluent and mobile phase optimization, formic acid removal, LC method recovery, PFV tuning, and EvapT optimization—was a UHPLC-CAD-MS method that produced near-uniform response across structurally diverse drug-like chemical matter. Ultimately, our protocol for determining yield utilizing CAD demonstrated robust validation, which in turn allows us to correct the EC50 of our HTChem-synthesized libraries.</p>
+</section>
+<section id="propagation-of-standard-error-for-corrected-pec50" class="level2">
+<h2 class="anchored" data-anchor-id="propagation-of-standard-error-for-corrected-pec50">4) Propagation of Standard Error for Corrected pEC50</h2>
+<p>Estimating the standard error of a corrected pEC50 value requires propagating the uncertainty associated with each component used to derive it. In our workflow, corrected pEC50 values are generated by adjusting an EC50 based upon a compound’s CAD-determined yield. The final standard error therefore includes three independent contributions: the DRC fitting error, the CAD peak area measurement error, and the between-compound variability in the universal CAD calibration slope. These contributions are combined according to Eq. 4 to approximate the standard error of a corrected pEC50.</p>
+<p><span class="math display">\[\text{Eq. 4} \qquad SE_{\text{corrected pEC}_{50}} \approx \sqrt{SE(\text{measured pEC}_{50})^2 + \frac{CV(\text{Area})^2 + CV(\text{slope})^2}{\ln(10)^2}}\]</span></p>
+<p>The first term of Eq. 4 is the DRC fitting error, <span class="math inline">\(SE(\text{measured pEC}_{50})\)</span>, which captures the precision with which the inflection point of the dose-response curve was determined and is independent of whether the underlying concentrations were nominal or yield-corrected.</p>
+<p>The other sources of uncertainty arise from the CAD-based yield determination, including both the noise in the CAD peak area measurement and the variability in the universal calibration slope. The second term of Eq. 4 is <span class="math inline">\(CV(\text{Area})\)</span>, which characterizes the precision of the CAD peak area measurement at a given signal level. This measured coefficient of variation depends strongly on peak magnitude, with small peaks suffering disproportionately from baseline contributions while large peaks approach an asymptotic floor reflecting injector and detector variability. For any peak area measurement, <span class="math inline">\(CV(\text{Area})\)</span> is computed from its own observed peak area (shown graphically in panel 2 of Fig. 5), yielding a per-compound noise estimate that scales appropriately with signal level. The third term of Eq. 4 is the between-compound spread in the universal CAD calibration slope, <span class="math inline">\(CV(\text{slope})\)</span>. The CAD “universal response” assumption enables concentration estimation without per-compound calibration, but it is inherently an approximation. We obtained a coefficient of variation of 31.74% by aggregating calibration slopes from a 300+ compound set spanning drug-like chemical space. This final term of Eq. 4 captures the expected compound-to-compound variation in CAD response when applying the universal slope to novel, uncharacterized compounds.</p>
+<p>Since these three contributions are treated as independent, their variances are combined in quadrature. The DRC fitting error is already expressed in pEC50 units, whereas the CAD area and slope CVs are relative uncertainty estimates from linear-space quantities. Before these CV-based contributions can be combined with the DRC fitting variance, they must be converted to base-10 log units by dividing their squared values by <span class="math inline">\(\ln(10)^2\)</span>. With all terms expressed in pEC50 units squared, the square root of their sum gives the approximate standard error of the corrected pEC50.</p>
+<p><a href="figures/static/Figure 5 - CAD-corrected pEC50 Uncertainty.png" class="lightbox" data-gallery="blog-figures"><img src="figures/static/Figure 5 - CAD-corrected pEC50 Uncertainty.png" class="img-fluid" style="width:100.0%"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 5:</strong> CAD-corrected pEC50 standard error is estimated by combining three independent contributions, which are the DRC fitting error (panel 1), the CAD peak area measurement error (panel 2), and between-compound variability in the universal CAD calibration slope (panel 3). The CAD-derived CV terms are converted to pEC50 units and combined with the DRC fitting error in quadrature to obtain a compound-specific standard error.</p>
+</div>
+</section>
+<section id="validation-of-yield-based-ec50-correction" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="validation-of-yield-based-ec50-correction">5) Validation of Yield-Based EC50 Correction</h2>
+<p>Next, to determine whether our standard-free absolute quantification UHPLC-CAD-MS method can robustly correct EC50s, we tested 20 compounds as synthesized crudes, “semi-purified” crudes, and purified standards. While the details distinguishing crudes from semi-purified crudes will be discussed in a future blog post, for the purposes of this post, semi-purification can be understood as a cleanup step that removes residual reaction inputs, whereas full purification isolates solely the intended product. Specifically, Octant’s method of semi-purification removes hydrophilic impurities from a crude reaction mixture, which, for amide couplings, constitute the majority of non-product reaction material due to the highly polar nature of the starting materials and reagents. Following DRC collection and CAD-based yield analysis of the synthesized compounds, we compared the pure pEC50 values to both the unadjusted and yield-adjusted pEC50s of the crudes (Fig. 6A,B). Applying this correction improved the agreement between the crude and pure pEC50, reducing the MAE (mean absolute error) from 0.447 (no correction) to 0.250 (with correction). Additionally, we see strong agreement (MAE = 0.168) between the corrected pEC50 of compounds in their crude and semi-pure forms (Fig. 6C). This observation indicates that the reagents and starting materials used in the synthesis of HTChem compounds, which are analytically-determined to be removed through semi-purification, do not have a large impact on the cell-based PXR-activation reporter assay. The filtering effect of the cell membrane is likely substantially reducing assay interference from polar impurities in this situation, but this protective effect would not apply to a biochemical assay. The method development for the synthesis itself warrants its own dedicated blog post, and will be discussed at a future date.</p>
+<div class="column-page">
+<p><a href="figures/static/Figure 6 - Validation Experiment Comparisons.png" class="lightbox" data-gallery="blog-figures"><img src="figures/static/Figure 6 - Validation Experiment Comparisons.png" class="img-fluid" style="width:100.0%"></a></p>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 6:</strong> Twenty PXR agonists with existing pure-compound screening data were synthesized and screened as crude products. The same 20 compounds were then resynthesized as crudes, semi-purified, and screened again. This generated three matched screening datasets for each compound: pure, crude, and semi-pure. The comparison of uncorrected crude-to-pure pEC50 is shown on the left (<strong>A</strong>), the corrected crude-to-pure pEC50 comparison is shown in the middle (<strong>B</strong>), and the corrected crude-to-semi-pure pEC50 comparison is shown on the right (<strong>C</strong>). The diagonal red-dotted line of each plot represents complete agreement, and the gray dotted lines on either side represent ±0.5 pEC50 units. Crude and semi-pure sample concentrations were determined using CAD, and yield-adjusted pEC50 values were calculated accordingly. In panels A and B, points are colored by the CAD-determined crude product yield. In panel C, points are colored by the average yield of the corresponding crude and semi-pure samples. Error bars represent 95% confidence intervals. Plots were generated using Python.</p>
+</div>
+<p>These results allow us to return to the two original questions surrounding the use of D2B for model-training data generation. First, can the true concentration of a crude HTChem compound be determined at nanoscale? The CAD-MS yield-determination method provides a practical answer by enabling concentration correction without compound-specific standards. Second, is the observed assay activity driven by the intended product or by crude reaction impurities? The strong correlation between crude and semi-purified samples suggests that non-product reaction components—excess fragment, unreacted core, coupling reagents, and polar byproducts—do not substantially affect the assay readout. With these questions addressed, we can advance to larger-scale D2B experiments to explore the chemical space around PXR induction.</p>
+</section>
+<section id="htchem-with-cad-ms-to-explore-pxr-sar" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="htchem-with-cad-ms-to-explore-pxr-sar">6) HTChem with CAD-MS to Explore PXR SAR</h2>
+<p>By bringing together HTChem, HTS, and CAD-MS, we are able to build, test, and characterize novel chemical libraries of interest. Octant’s chemistry platform facilitates the elucidation of structure-activity relationships with significantly higher resolution than is possible using commercial libraries. Figure 7 highlights an example of preliminary SAR derived from a 96-compound “semi-pure” HTChem library with CAD-corrected PXR assay data. Specifically, the initial compound (Compound A) is relatively inactive, with a pEC50 of 4.05 (89 µM). However, expanding the central piperazine to a seven-membered homopiperazine ring yields a 10-fold increase in potency (Compound B). Furthermore, introducing a 3-isopropyl group to the left-hand pyrimidine core (Compound C) enhances activity by nearly 100-fold. Interestingly, installing a polar methyl ester at this same position (Compound D) fails to elicit a significant increase in PXR activation, and an alternate pyrimidine substitution (Compound E) similarly provides no potency benefit. This example highlights how rich in activity cliffs PXR SAR can be, and reinforces the value of high-resolution SAR exploration with analogs from HTChem. A related series bearing an α-methyl substitution at the benzylic position (Compounds F-J) showed a similar SAR pattern. Consistent with the first series, we see an increase in pEC50 with lipophilic substitutions on the pyrimidine, while the polar methyl ester remains equipotent with the unsubstituted pyrimidine (Compound F). Moving forward, we will continue leveraging our HTChem platform to expand this SAR landscape. By tightly integrating our HTChem, assay, and structural biology efforts, we aim to deepen our understanding of PXR and apply these techniques to other Avoidome targets.</p>
+<p><a href="figures/static/Figure 7 - ChemDraw SAR.png" class="lightbox" data-gallery="blog-figures"><img src="figures/static/Figure 7 - ChemDraw SAR.png" class="img-fluid" style="width:100.0%"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 7:</strong> Ten related compounds from a 96-compound HTChem synthesis library are shown. The pink bond indicates the amide coupling linkage, and pEC50 values are shown underneath each compound.</p>
+</div>
+<p>From these HTChem SAR insights, the ability to characterize crude reaction yields, and our confidence that amide coupling impurities have limited impact on the PXR activation assay, we can proceed with additional HTChem library syntheses from two hit-derived carboxylic acid cores (Fig. 8). One particular core, OCNT-0002416, was designed from the α-methyl-substituted series (Compounds F-J in Fig. 7), which showed interesting SAR patterns that we wanted to explore further. The full HTChem libraries were screened at two concentrations—10 µM and 30 µM—to probe for activity while catching compounds with rollover activity (i.e., active at lower concentrations but losing activity at higher concentrations). Primary screen hits, as well as chemically-similar molecules to these hits (called “chemisimilars”), were selected for follow-up DRC collection to assess EC50. Specifically, 228 of the original 1,536 compounds per library had 9-point dose-response curves generated from 5 nM to 50 µM. With CAD-determined reaction yields for these 456 molecules, corrected pEC50s were calculated, and these data are presented in the interactive plots below (Fig. 9A-E).</p>
+<p><a href="figures/static/Figure 8 - HTChem Libraries.png" class="lightbox" data-gallery="blog-figures"><img src="figures/static/Figure 8 - HTChem Libraries.png" class="img-fluid" style="width:100.0%"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 8:</strong> Two known PXR agonists were used to design carboxylic acid HTChem cores, which underwent amide coupling with a library of amine-bearing fragment molecules.<br>
+<strong>A.</strong> Reference hit OCNT-2317298 was used to design the OCNT-2432456 core, which was reacted with a collection of 1,536 diversity-selected amines.<br>
+<strong>B.</strong> Reference hit OCNT-2308748 was used to design the OCNT-0002416 core, which was reacted with a collection of 1,536 diversity-selected amines.</p>
+</div>
+<div class="column-page">
+<div style="position:relative; height:700px; overflow:hidden; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+  <iframe src="figures/interactive/Figure 9A - Beeswarm.html" style="position:absolute; top:0; left:0; width:133%; height:933px; border:none;
+           transform:scale(0.75); transform-origin:top left;">
+  </iframe>
+</div>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 9A:</strong> Beeswarm plot presentation of the HTChem libraries, including the 96-compound microscale synthesis, color-coded by CAD-derived synthesis yield.</p>
+</div>
+<div class="column-page">
+<div style="position:relative; height:700px; overflow:hidden; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+  <iframe src="figures/interactive/Figure 9B - OCNT-2432456 Library.html" style="position:absolute; top:0; left:0; width:133%; height:933px; border:none;
+           transform:scale(0.75); transform-origin:top left;">
+  </iframe>
+</div>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 9B:</strong> OCNT-2432456 library — uncorrected vs.&nbsp;corrected pEC50, color-coded by chemical similarity to the reference hit.</p>
+</div>
+<div class="column-page">
+<div style="position:relative; height:700px; overflow:hidden; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+  <iframe src="figures/interactive/Figure 9C - OCNT-0002416 Library.html" style="position:absolute; top:0; left:0; width:133%; height:933px; border:none;
+           transform:scale(0.75); transform-origin:top left;">
+  </iframe>
+</div>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 9C:</strong> OCNT-0002416 library — uncorrected vs.&nbsp;corrected pEC50, color-coded by chemical similarity to the reference hit.</p>
+</div>
+<div class="column-page">
+<div style="position:relative; height:700px; overflow:hidden; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+  <iframe src="figures/interactive/Figure 9D - OCNT-2432456 Priority Rank.html" style="position:absolute; top:0; left:0; width:133%; height:933px; border:none;
+           transform:scale(0.75); transform-origin:top left;">
+  </iframe>
+</div>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 9D:</strong> pEC50 movement following yield-based correction for the 30 most potent hits from the OCNT-2432456 library, color-coded by chemical similarity to the reference hit.</p>
+</div>
+<div class="column-page">
+<div style="position:relative; height:700px; overflow:hidden; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+  <iframe src="figures/interactive/Figure 9E - OCNT-0002416 Priority Rank.html" style="position:absolute; top:0; left:0; width:133%; height:933px; border:none;
+           transform:scale(0.75); transform-origin:top left;">
+  </iframe>
+</div>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 9E:</strong> pEC50 movement following yield-based correction for the 30 most potent hits from the OCNT-0002416 library, color-coded by chemical similarity to the reference hit.</p>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 9:</strong> Two known PXR agonists were used to design carboxylic acid HTChem cores, which underwent amide coupling with a library of amine-bearing fragment molecules. Beeswarm plots of the HTChem libraries, including the 96-compound “semi-pure” microscale synthesis, is presented, with compounds color-coded based on CAD-derived synthesis yield (<strong>A</strong>). The two carboxylic acid-core HTChem libraries are plotted with respect to their uncorrected (x-axis) and corrected (y-axis) pEC50 values, with color coding based on chemical similarity to the reference hit from which the core was derived (<strong>B, C</strong>). The pEC50 movement following yield-based correction for the 30 most potent hits from the two carboxylic acid-core HTChem libraries is shown, with color coding based on chemical similarity to the reference hit (<strong>D, E</strong>).</p>
+</div>
+<p>From these HTChem syntheses, broad observations can be made, such as the OCNT-0002416 core library being more potent on average than the OCNT-2432456 core library, but also having more failed syntheses (Fig. 9A). Among the compounds from these libraries identified as primary screen hits or chemisimilars, we advanced both groups in parallel to DRC collection and CAD quantification. In contrast to primary screen hits, chemisimilar compounds are not active in primary screens, possibly due to failed synthesis, insufficient product yield, or a true activity cliff. Using our yield quantification capabilities, we can identify compounds with insufficient yield that would otherwise have led to false-negative data. This consideration highlights the importance of integrating CAD with HTChem for model-training purposes, where low-yielding or failed syntheses could otherwise be misclassified as true biological inactivity.</p>
+<p>Together, the three HTChem libraries, including the 96 “semi-purified” crudes, expand the publicly-available PXR screening dataset and are intended to facilitate further exploration of PXR SAR across related scaffolds. All raw data for the libraries and experiments described in this post—including CAD peak areas, CAD-derived yields, pEC50 values, and yield-corrected pEC50 calculations with error estimates and confidence intervals—are available in the <a href="https://github.com/OpenADMET/octant-pxr-htchem-blogpost" target="_blank">accompanying GitHub repository</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Accessing the Data on HuggingFace
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The crude and semi-pure HTChem library data released with this post are also available on HuggingFace at <a href="https://huggingface.co/datasets/openadmet/pxr-challenge-train-test" target="_blank"><code>openadmet/pxr-challenge-train-test</code></a>. They can be loaded with the <a href="https://huggingface.co/docs/datasets" target="_blank"><code>datasets</code></a> library:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Crude HTChem libraries (454 novel EC50s)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ds_crudes <span class="op">=</span> load_dataset(<span class="st">"openadmet/pxr-challenge-train-test"</span>, <span class="st">"crudes_htchem"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>train_crudes <span class="op">=</span> ds_crudes[<span class="st">"train"</span>]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Semi-pure HTChem library (96-compound microscale synthesis)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ds_semi_pure <span class="op">=</span> load_dataset(<span class="st">"openadmet/pxr-challenge-train-test"</span>, <span class="st">"semi_pure_htchem"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>train_semi_pure <span class="op">=</span> ds_semi_pure[<span class="st">"train"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For the crude libraries, key columns include <code>SMILES</code>, <code>OCNT_ID</code>, <code>Corrected Crude pEC50 (log)</code>, <code>Corrected Crude pEC50 ±95% CI (log)</code>, <code>Crude Product Yield (%)</code>, and <code>Crude Peak Area (pA*min)</code>. The semi-pure dataset shares the same schema, with yield and pEC50 values reflecting the semi-purified sample format.</p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">7) Conclusion</h2>
+<p>The methodologies we have described address a fundamental tension in high-throughput data generation: the trade-off between scale and fidelity. By integrating standard-free UHPLC-CAD-MS quantification with cell-based screening, we can estimate compound-specific reaction yields at the nanoscale, correct nominal D2B assay concentrations, and convert crude HTChem screening results into quantitative pEC50 values.</p>
+<p>This yield-correction step is what allows HTChem data to move beyond hit finding. Instead of treating crude library screening as a preliminary activity signal that requires downstream resynthesis before it can be trusted, CAD-MS enables each compound’s apparent EC50 to be interpreted in the context of how much product was actually formed. This capability is crucial for generating model-training data, in which HTChem compounds with low reaction yields or failed syntheses could otherwise be underestimated in potency or misclassified as inactive.</p>
+<p>Applied to PXR, this workflow generated new open datasets spanning crude, semi-purified, and purified compound formats, as well as larger HTChem libraries designed around known PXR activators. More broadly, the same approach can be used to rapidly generate quantitative SAR data around other Avoidome targets. We are excited to make this expanded PXR dataset available to the OpenADMET community and invite feedback through the <a href="https://discord.gg/WrVQe44FDY" target="_blank">OpenADMET Discord</a> or <a href="mailto:openadmet@omsf.io">by email</a>.</p>
+</section>
+<section id="acknowledgments" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgments">8) Acknowledgments</h2>
+<p>The authors would like to acknowledge experimental data, analysis, and scientific input contributed by Ayesha Ghazali, Bryan Jiang, Galen Correy, Hugo MacDermott-Opeskin, Junyu Deng, Marco Falcioni, Naomi Handly, Nathaniel Luis, Patrick Walters, Robert Warneford-Thomson, Sam Sabaat, Scott Simpkins, Steven Edgar, and Theodore Tarver.</p>
+<p>This work was supported by funding from ARPA-H and the Astera Foundation.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>
+  // Copy each figure caption into every preceding lightbox link's
+  // description so the caption is retained when a figure is maximized
+  // (works for both single- and multi-image figure blocks).
+  document.querySelectorAll('.figure-caption').forEach(function(cap) {
+    var prev = cap.previousElementSibling;
+    if (!prev) return;
+    prev.querySelectorAll('a.lightbox').forEach(function(link) {
+      link.setAttribute('data-description', cap.innerHTML);
+    });
+  });
+
+  // Reading-progress header: slide in after scrolling past the hero,
+  // and update the progress fill to track scroll depth.
+  (function() {
+    var header = document.querySelector('.progress-header');
+    var fill = document.querySelector('.reading-progress-fill');
+    if (!header || !fill) return;
+    var threshold = 300; // px scrolled before the header appears
+    window.addEventListener('scroll', function() {
+      var scrollTop = window.scrollY;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docHeight > 0 ? Math.min(scrollTop / docHeight * 100, 100) : 0;
+      fill.style.width = pct + '%';
+      header.classList.toggle('visible', scrollTop > threshold);
+    });
+  })();
+
+  // Size each interactive-figure iframe to its content height so the
+  // Plotly figures show in full with no inner scrollbar. The iframes
+  // are scaled to 0.75 via CSS, so the (overflow:hidden) wrapper is
+  // set to 0.75x the measured height to match.
+  (function() {
+    var SCALE = 0.75;
+    function fit(frame) {
+      try {
+        var h = frame.contentDocument.documentElement.scrollHeight;
+        if (!h) return;
+        frame.style.height = h + 'px';
+        if (frame.parentElement) {
+          frame.parentElement.style.height = Math.round(h * SCALE) + 'px';
+        }
+      } catch (e) { /* cross-origin or not ready; ignore */ }
+    }
+    document.querySelectorAll('iframe[src*="interactive"]').forEach(function(frame) {
+      frame.addEventListener('load', function() { fit(frame); });
+      if (frame.contentDocument &&
+          frame.contentDocument.readyState === 'complete') {
+        fit(frame);
+      }
+    });
+  })();
+</script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
