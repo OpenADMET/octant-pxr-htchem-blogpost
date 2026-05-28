@@ -21,17 +21,6 @@
 }
 
 /* --------------------------------------------------------------------------
-   1b. Display equations — left-aligned
-   MathJax centers display math by default; override so the "Eq. N" labels sit
-   at the body's left margin instead of being pushed in by centering.
-   -------------------------------------------------------------------------- */
-
-mjx-container[display="true"] {
-  text-align: left !important;
-  margin-left: 0 !important;
-}
-
-/* --------------------------------------------------------------------------
    2. Citation tooltips
    Superscript citation markers (<a class="cite-tip" data-tooltip="...">) reveal
    the full reference on hover via a pure-CSS ::after bubble — no JavaScript, so

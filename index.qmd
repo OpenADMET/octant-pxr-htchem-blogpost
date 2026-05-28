@@ -35,12 +35,9 @@ OpenADMET's [PXR induction challenge](https://openadmet.ghost.io/predicting-pxr-
 
 HTChem library size can be scaled up (to over 10k analogs from a single core) or refined for a more targeted approach to exploring SAR. However, regardless of library size, HTChem reaction yields can vary significantly from compound to compound, even after pre-synthesis optimization of reaction conditions. Thus, in order to more confidently assign a potency value to an HTChem molecule, incorporation of reaction yield into the calculation of the EC50 is crucial so that potency is determined from the actual concentration of the active species. This process of EC50 "correction" is done by retroactively adjusting the crude, uncorrected EC50 in a manner proportional to the reaction yield (Eq. 1). Equivalently, the correction can be understood as adjusting the nominal concentration of a reaction initially assumed to have had 100% yield by a factor corresponding to the observed yield (Eq. 2). Conceptually, this can be visualized by adjusting the x-axis of a dose-response curve based upon the true concentration of the HTChem molecule. This process of EC50 correction, and the subsequent movement of a data point when comparing a crude HTChem compound's pEC50 to its pure-version pEC50, is animated below (Fig. 2).
 
-$$
-\begin{aligned}
-& \text{Eq. 1} \quad \text{Corrected EC}_{50}\text{ (M)} &&= \text{Crude EC}_{50}\text{ (M)} \times \text{Yield (\%)} \\[4pt]
-& \text{Eq. 2} \quad \text{True Concentration (M)} &&= \text{Nominal Crude Concentration (M)} \times \text{Yield (\%)}
-\end{aligned}
-$$
+$$\text{Eq. 1} \qquad \text{Corrected EC}_{50}\text{ (M)} = \text{Crude EC}_{50}\text{ (M)} \times \text{Yield (\%)}$$
+
+$$\text{Eq. 2} \qquad \text{True Concentration (M)} = \text{Nominal Crude Concentration (M)} \times \text{Yield (\%)}$$
 
 ![](<figures/static/Figure 2 - Yield Correction.gif>){width=100% group="blog-figures"}
 
