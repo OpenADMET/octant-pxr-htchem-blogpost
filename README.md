@@ -1,4 +1,5 @@
 # octant-pxr-htchem-blogpost
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21504434-blue.svg)](https://doi.org/10.5281/zenodo.21504434)
 
 Code, raw data, and standalone interactive figures for the blog post:
 
