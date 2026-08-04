@@ -7,6 +7,9 @@ author:
 date: today
 ---
 
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21504434-blue.svg)](https://doi.org/10.5281/zenodo.21504434)
+
+
 ## 1) Introduction
 
 At [OpenADMET](https://openadmet.org/){target="_blank"}, we have the mission to make therapeutic development more reliable, affordable, and effective by building open models and datasets for ADMET properties. To deliver on this goal, we are chemically mapping the "Avoidome," consisting of the enzymes, transporters, and receptors treated as "antitargets" in medicinal chemistry and pharmacology <a href="https://doi.org/10.1016/j.cell.2024.01.003" class="cite-tip" data-tooltip="Fraser, J. S.; Murcko, M. A. (2024). Structure is beauty, but not always truth. Cell." target="_blank">1</a>. By uncovering and elucidating the molecular structures that drive activity against antitargets, the next generation of safe and effective medicines will be developed at a fraction of the traditional time and cost.
