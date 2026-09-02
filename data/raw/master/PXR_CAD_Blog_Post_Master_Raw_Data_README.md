@@ -2,6 +2,10 @@
 
 This README accompanies `PXR_CAD_Blog_Post_Master_Raw_Data.xlsx`. It describes what is contained in each worksheet, what each column represents, and how the CAD-corrected potency and uncertainty values are calculated.
 
+## Erratum — 2026-09-02
+
+The SMILES for 10 compounds in the `96-Compound µScale Semi-Pure` worksheet were corrected due to regiochemical enumeration errors (acylation site: OCNT-2469084, -2469095, -2469107; ring identity: OCNT-2469108 through -2469114). All corrected structures are constitutional isomers of the originals (ΔMW = 0), so no activity, yield, or uncertainty value changed. The derived CSVs and HuggingFace training file have been updated accordingly.
+
 The workbook contains three worksheets:
 
 | Worksheet | Contents |

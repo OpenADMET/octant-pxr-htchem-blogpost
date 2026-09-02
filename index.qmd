@@ -245,6 +245,10 @@ From these HTChem syntheses, broad observations can be made, such as the OCNT-00
 Together, the three HTChem libraries, including the 96 “semi-purified” crudes, expand the publicly-available PXR screening dataset and are intended to facilitate further exploration of PXR SAR across related scaffolds. All raw data for the libraries and experiments described in this post—including CAD peak areas, CAD-derived yields, pEC50 values, and yield-corrected pEC50 calculations with error estimates and confidence intervals—are available in the [accompanying GitHub repository](https://github.com/OpenADMET/octant-pxr-htchem-blogpost){target="_blank"}.
 
 ::: {.callout-note}
+::: {.callout-note}
+**2026-09-02 — SMILES correction:** The SMILES for 10 compounds in the 96-compound µScale semi-pure library (OCNT-2469084, -2469095, -2469107, -2469108, -2469109, -2469110, -2469111, -2469112, -2469113, -2469114) were corrected due to regiochemical enumeration errors. All corrected structures are constitutional isomers of the originals (ΔMW = 0), so no activity, yield, or uncertainty value changed. Figure 9A and the HuggingFace dataset have been updated. The SAR discussion and Figure 7 are unaffected — they describe a disjoint set of compounds.
+:::
+
 ## Accessing the Data on HuggingFace
 
 The crude and semi-pure HTChem library data released with this post are also available on HuggingFace at [`openadmet/pxr-challenge-train-test`](https://huggingface.co/datasets/openadmet/pxr-challenge-train-test){target="_blank"}. They can be loaded with the [`datasets`](https://huggingface.co/docs/datasets){target="_blank"} library:
