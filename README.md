@@ -68,7 +68,7 @@ Static blog-post figure files are under `figures/static/`.
 
 Data and method documentation are under `data/raw/`.
 
-- `data/raw/master/` contains `PXR_CAD_Blog_Post_Master_Raw_Data.xlsx` and its README. The workbook contains the displayed high-level values such as uncorrected pEC50, adjusted pEC50, CAD yield, yield source, CAD detection status, and SMILES.
+- `data/raw/master/` contains `PXR_CAD_Blog_Post_Master_Raw_Data.xlsx` and its README. The workbook contains the displayed high-level values such as uncorrected pEC50, adjusted pEC50, CAD yield, yield source, CAD detection status, and SMILES. See the [README erratum](data/raw/master/PXR_CAD_Blog_Post_Master_Raw_Data_README.md#erratum--2026-09-02) for a 2026-09-02 SMILES correction affecting 10 compounds in the semi-pure library.
 - `data/raw/drc/` contains PXR DRC point-level and summary tables used for hover-card dose-response context, including the two HTChem library screens, the 96-compound microscale semipure screen, and the pure reference-hit screens.
 - `data/raw/citations/` contains the numbered source-to-hover-text mapping for the blog-post citations.
 - `data/raw/method-details/` contains `Octant_UHPLC-CAD-MS_Method_Details.md` for UHPLC-CAD-MS method details.
